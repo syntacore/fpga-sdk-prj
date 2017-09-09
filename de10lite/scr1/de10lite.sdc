@@ -1,0 +1,90 @@
+
+
+create_clock  -name MAX10_CLK2_50       -period 20  [get_ports {MAX10_CLK2_50}]
+create_clock  -name MAX10_CLK2_50_VIRT  -period 20
+create_clock  -name JTAG_TCK            -period 200 [get_ports {JTAG_TCK}]
+create_clock  -name JTAG_TCK_VIRT       -period 200
+create_clock  -name DRAM_CLK            -period 10
+
+
+
+create_generated_clock  -source MAX10_CLK2_50 \
+                        -divide_by 5 \
+                        -multiply_by 2 \
+                        -duty_cycle 50.00 \
+                        -name CLK_RISCV \
+                        {i_pll|altpll_component|auto_generated|pll1|clk[0]}
+
+create_generated_clock  -source MAX10_CLK2_50 \
+                        -multiply_by 2 \
+                        -duty_cycle 50.00 \
+                        -name CLK_SDRAM \
+                        {i_pll|altpll_component|auto_generated|pll1|clk[1]}
+
+create_generated_clock  -source MAX10_CLK2_50 \
+                        -multiply_by 2 \
+                        -phase 108.00 \
+                        -duty_cycle 50.00 \
+                        -name CLK_SDRAM_EXT \
+                        {i_pll|altpll_component|auto_generated|pll1|clk[2]}
+
+
+
+derive_pll_clocks
+derive_clock_uncertainty
+
+
+
+set_clock_groups -exclusive   \
+                 -group {MAX10_CLK2_50  MAX10_CLK2_50_VIRT} \
+                 -group {JTAG_TCK       JTAG_TCK_VIRT}      \
+                 -group {CLK_SDRAM_EXT  DRAM_CLK}
+
+
+
+
+
+set_input_delay  -clock "MAX10_CLK2_50_VIRT" 2.0 [get_ports {UART_TXD KEY* SW* }]
+set_output_delay -clock "MAX10_CLK2_50_VIRT" 2.0 [get_ports {UART_RXD LED* HEX* }]
+
+
+set_input_delay  -clock "JTAG_TCK_VIRT" 4.0 [get_ports {JTAG_TRST_N JTAG_TDI JTAG_TMS}]
+set_output_delay -clock "JTAG_TCK_VIRT" 4.0 [get_ports {JTAG_TDO}]
+
+
+
+
+
+
+
+
+
+
+
+#**************************************************************
+# Set Input Delay
+#**************************************************************
+# suppose +- 100 ps skew
+# Board Delay (Data) + Propagation Delay - Board Delay (Clock)
+# max 5.4(max) +0.4(trace delay) +0.1 = 5.9
+# min 2.7(min) +0.4(trace delay) -0.1 = 3.0
+set_input_delay -max -clock DRAM_CLK 5.9 [get_ports DRAM_DQ*]
+set_input_delay -min -clock DRAM_CLK 3.0 [get_ports DRAM_DQ*]
+
+#shift-window
+set_multicycle_path -from [get_clocks {DRAM_CLK}] \
+                    -to   [get_clocks {MAX10_CLK2_50}] \
+                    -setup 2
+
+#**************************************************************
+# Set Output Delay
+#**************************************************************
+# suppose +- 100 ps skew
+# max : Board Delay (Data) - Board Delay (Clock) + tsu (External Device)
+# min : Board Delay (Data) - Board Delay (Clock) - th (External Device)
+# max 1.5+0.1 =1.6
+# min -0.8-0.1 = 0.9
+set_output_delay -max -clock DRAM_CLK  1.6  [get_ports {DRAM_DQ* DRAM_*DQM}]
+set_output_delay -min -clock DRAM_CLK -0.9  [get_ports {DRAM_DQ* DRAM_*DQM}]
+set_output_delay -max -clock DRAM_CLK  1.6  [get_ports {DRAM_ADDR* DRAM_BA* DRAM_RAS_N DRAM_CAS_N DRAM_WE_N DRAM_CKE DRAM_CS_N}]
+set_output_delay -min -clock DRAM_CLK -0.9  [get_ports {DRAM_ADDR* DRAM_BA* DRAM_RAS_N DRAM_CAS_N DRAM_WE_N DRAM_CKE DRAM_CS_N}]
