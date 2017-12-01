@@ -204,9 +204,9 @@ set_location_assignment PIN_L19 -to HEX5[7]
 # KEY
 #============================================================
 set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to KEY[0]
-set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to KEY[1]
+#set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to KEY[1]
 set_location_assignment PIN_B8 -to KEY[0]
-set_location_assignment PIN_A7 -to KEY[1]
+#set_location_assignment PIN_A7 -to KEY[1]
 
 #============================================================
 # LED

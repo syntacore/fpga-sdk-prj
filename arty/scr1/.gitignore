@@ -1,3 +1,5 @@
 .Xil/**
 arty_scr1/**
+!bd/sys_pll/sys_pll.bd
+!bd/system/system.bd
 

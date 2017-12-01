@@ -89,7 +89,9 @@ Bit(s) | Name | Description
 
 
 ## SCR1 JTAG Pin-Out
+
 SCR1 JTAG port is routed to the onboard Pmod connector JD.
+
 Net    | JD bit | Pmod JD pin
 -------| ------ | -----------
 TRSTn  | 2      | 3
@@ -98,3 +100,4 @@ TDO    | 4      | 7
 TDI    | 5      | 8
 SRSTn  | 6      | 9
 TMS    | 7      | 10
+

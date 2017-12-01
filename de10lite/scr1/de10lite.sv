@@ -49,7 +49,7 @@ module de10lite (
     output                [7:0]     HEX3,
     output                [7:0]     HEX4,
     output                [7:0]     HEX5,
-    input                 [1:0]     KEY,
+    input                 [0:0]     KEY,
     output                [9:0]     LEDR,
     input                 [9:0]     SW
 );

@@ -1,9 +1,7 @@
 
 
 create_clock  -name MAX10_CLK2_50       -period 20  [get_ports {MAX10_CLK2_50}]
-create_clock  -name MAX10_CLK2_50_VIRT  -period 20
 create_clock  -name JTAG_TCK            -period 200 [get_ports {JTAG_TCK}]
-create_clock  -name JTAG_TCK_VIRT       -period 200
 create_clock  -name DRAM_CLK            -period 10
 
 
@@ -30,30 +28,33 @@ create_generated_clock  -source MAX10_CLK2_50 \
 
 
 
-derive_pll_clocks
+derive_pll_clocks -create_base_clocks
 derive_clock_uncertainty
 
 
 
-set_clock_groups -exclusive   \
-                 -group {MAX10_CLK2_50  MAX10_CLK2_50_VIRT} \
-                 -group {JTAG_TCK       JTAG_TCK_VIRT}      \
-                 -group {CLK_SDRAM_EXT  DRAM_CLK}
+set_clock_groups -asynchronous -group {MAX10_CLK2_50}
+set_clock_groups -asynchronous -group {JTAG_TCK}
+set_clock_groups -asynchronous -group {CLK_RISCV}
+set_clock_groups -asynchronous -group {CLK_SDRAM_EXT  DRAM_CLK}
 
 
 
 
 
-set_input_delay  -clock "MAX10_CLK2_50_VIRT" 2.0 [get_ports {UART_TXD KEY* SW* }]
-set_output_delay -clock "MAX10_CLK2_50_VIRT" 2.0 [get_ports {UART_RXD LED* HEX* }]
+set_input_delay  -add_delay -clock_fall -clock JTAG_TCK -max  5 [get_ports {JTAG_TMS JTAG_TDI}]
+set_input_delay  -add_delay -clock_fall -clock JTAG_TCK -min  0 [get_ports {JTAG_TMS JTAG_TDI}]
+set_output_delay -add_delay -clock_fall -clock JTAG_TCK -max  5 [get_ports {JTAG_TDO}]
+set_output_delay -add_delay -clock_fall -clock JTAG_TCK -min  0 [get_ports {JTAG_TDO}]
 
 
-set_input_delay  -clock "JTAG_TCK_VIRT" 4.0 [get_ports {JTAG_TRST_N JTAG_TDI JTAG_TMS}]
-set_output_delay -clock "JTAG_TCK_VIRT" 4.0 [get_ports {JTAG_TDO}]
-
-
-
-
+set_false_path -to   [get_ports {HEX*}]
+set_false_path -to   [get_ports {LEDR*}]
+set_false_path -to   [get_ports {UART_RXD}]
+set_false_path -from [get_ports {UART_TXD}]
+set_false_path -from [get_ports {JTAG_TRST_N}]
+set_false_path -from [get_ports {KEY*}]
+set_false_path -from [get_ports {SW*}]
 
 
 
