@@ -1,0 +1,6 @@
+
+QUARTUS_VERSION = "13.0"
+DATE = "18:09:23  July 01, 2016"
+
+# Revisions
+PROJECT_REVISION = "a5_sdk"

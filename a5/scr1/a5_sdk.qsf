@@ -1,0 +1,555 @@
+set_global_assignment -name FAMILY "Arria V"
+set_global_assignment -name DEVICE 5AGXFB3H4F35C4
+set_global_assignment -name TOP_LEVEL_ENTITY a5_sdk
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION "11.1 SP2"
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "16:13:07  FEBRUARY 06, 2012"
+set_global_assignment -name LAST_QUARTUS_VERSION "13.0 SP1"
+set_global_assignment -name DEVICE_FILTER_PACKAGE FBGA
+set_global_assignment -name DEVICE_FILTER_PIN_COUNT 1152
+set_global_assignment -name DEVICE_FILTER_SPEED_GRADE 4_H4
+set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 256
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name ENABLE_DEVICE_WIDE_RESET OFF
+set_global_assignment -name USE_CONFIGURATION_DEVICE ON
+set_global_assignment -name CRC_ERROR_OPEN_DRAIN ON
+set_global_assignment -name RESERVE_ALL_UNUSED_PINS_WEAK_PULLUP "AS INPUT TRI-STATED"
+set_global_assignment -name OUTPUT_IO_TIMING_NEAR_END_VMEAS "HALF VCCIO" -rise
+set_global_assignment -name OUTPUT_IO_TIMING_NEAR_END_VMEAS "HALF VCCIO" -fall
+set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -rise
+set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -fall
+set_global_assignment -name ACTIVE_SERIAL_CLOCK FREQ_100MHZ
+set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "2.5 V"
+
+
+# REFCLK
+set_location_assignment PIN_A19 -to clkin_100
+set_location_assignment PIN_AP29 -to clkin_50
+set_instance_assignment -name IO_STANDARD "2.5 V" -to clkin_50
+
+
+# HSMC
+set_location_assignment PIN_AH10 -to uart0_txd
+set_location_assignment PIN_AJ10 -to uart0_rxd
+set_location_assignment PIN_AE6 -to jtag_srst_n
+set_location_assignment PIN_AJ6 -to jtag_trst_n
+set_location_assignment PIN_AC7 -to jtag_tck
+set_location_assignment PIN_AH6 -to jtag_tdi
+set_location_assignment PIN_AM3 -to jtag_tdo
+set_location_assignment PIN_AC6 -to jtag_tms
+
+set_location_assignment PIN_AD9 -to jtag_vcc[0]
+set_location_assignment PIN_AM11 -to jtag_vcc[1]
+set_location_assignment PIN_AL12 -to jtag_gnd[0]
+set_location_assignment PIN_AK12 -to jtag_gnd[1]
+set_location_assignment PIN_AM13 -to jtag_gnd[2]
+set_location_assignment PIN_AL13 -to jtag_gnd[3]
+set_location_assignment PIN_AH12 -to jtag_gnd[4]
+set_location_assignment PIN_AG12 -to jtag_gnd[5]
+set_location_assignment PIN_AJ13 -to jtag_gnd[6]
+set_location_assignment PIN_AH13 -to jtag_gnd[7]
+
+set_instance_assignment -name IO_STANDARD "2.5 V" -to uart0_txd
+set_instance_assignment -name IO_STANDARD "2.5 V" -to uart0_rxd
+set_instance_assignment -name IO_STANDARD "2.5 V" -to jtag_srst_n
+set_instance_assignment -name IO_STANDARD "2.5 V" -to jtag_trst_n
+set_instance_assignment -name IO_STANDARD "2.5 V" -to jtag_tck
+set_instance_assignment -name IO_STANDARD "2.5 V" -to jtag_tdi
+set_instance_assignment -name IO_STANDARD "2.5 V" -to jtag_tdo
+set_instance_assignment -name IO_STANDARD "2.5 V" -to jtag_tms
+set_instance_assignment -name IO_STANDARD "2.5 V" -to jtag_vcc
+set_instance_assignment -name IO_STANDARD "2.5 V" -to jtag_gnd
+
+# ddr3
+set_location_assignment PIN_E26 -to ddr3_ck_p
+set_location_assignment PIN_F26 -to ddr3_ck_n
+set_location_assignment PIN_D26 -to ddr3_a[0]
+set_location_assignment PIN_E27 -to ddr3_a[1]
+set_location_assignment PIN_A27 -to ddr3_a[2]
+set_location_assignment PIN_B27 -to ddr3_a[3]
+set_location_assignment PIN_G26 -to ddr3_a[4]
+set_location_assignment PIN_H26 -to ddr3_a[5]
+set_location_assignment PIN_K27 -to ddr3_a[6]
+set_location_assignment PIN_L27 -to ddr3_a[7]
+set_location_assignment PIN_D27 -to ddr3_a[8]
+set_location_assignment PIN_C28 -to ddr3_a[9]
+set_location_assignment PIN_C29 -to ddr3_a[10]
+set_location_assignment PIN_D28 -to ddr3_a[11]
+set_location_assignment PIN_G27 -to ddr3_a[12]
+#set_location_assignment PIN_G28 -to ddr3_a[13]
+set_location_assignment PIN_A29 -to ddr3_ba[0]
+set_location_assignment PIN_A28 -to ddr3_ba[1]
+set_location_assignment PIN_B29 -to ddr3_ba[2]
+set_location_assignment PIN_F28 -to ddr3_casn
+set_location_assignment PIN_K29 -to ddr3_cke
+set_location_assignment PIN_D30 -to ddr3_csn
+set_location_assignment PIN_H27 -to ddr3_odt
+set_location_assignment PIN_B30 -to ddr3_rasn
+set_location_assignment PIN_F29 -to ddr3_wen
+set_location_assignment PIN_K25 -to ddr3_rstn
+set_location_assignment PIN_G24 -to ddr3_dq[0]
+set_location_assignment PIN_H24 -to ddr3_dq[1]
+set_location_assignment PIN_M24 -to ddr3_dq[2]
+set_location_assignment PIN_A26 -to ddr3_dq[3]
+set_location_assignment PIN_A25 -to ddr3_dq[4]
+set_location_assignment PIN_C25 -to ddr3_dq[5]
+set_location_assignment PIN_B26 -to ddr3_dq[6]
+set_location_assignment PIN_C26 -to ddr3_dq[7]
+set_location_assignment PIN_M25 -to ddr3_dm[0]
+set_location_assignment PIN_F25 -to ddr3_dqs_p[0]
+set_location_assignment PIN_G25 -to ddr3_dqs_n[0]
+set_location_assignment PIN_H23 -to ddr3_dq[8]
+set_location_assignment PIN_J23 -to ddr3_dq[9]
+set_location_assignment PIN_K24 -to ddr3_dq[10]
+set_location_assignment PIN_B24 -to ddr3_dq[11]
+set_location_assignment PIN_C23 -to ddr3_dq[12]
+set_location_assignment PIN_D23 -to ddr3_dq[13]
+set_location_assignment PIN_D24 -to ddr3_dq[14]
+set_location_assignment PIN_E24 -to ddr3_dq[15]
+set_location_assignment PIN_M23 -to ddr3_dm[1]
+set_location_assignment PIN_F23 -to ddr3_dqs_p[1]
+set_location_assignment PIN_G23 -to ddr3_dqs_n[1]
+set_location_assignment PIN_D21 -to ddr3_dq[16]
+set_location_assignment PIN_E21 -to ddr3_dq[17]
+set_location_assignment PIN_M21 -to ddr3_dq[18]
+set_location_assignment PIN_C22 -to ddr3_dq[19]
+set_location_assignment PIN_D22 -to ddr3_dq[20]
+set_location_assignment PIN_G21 -to ddr3_dq[21]
+set_location_assignment PIN_A23 -to ddr3_dq[22]
+set_location_assignment PIN_B23 -to ddr3_dq[23]
+set_location_assignment PIN_M22 -to ddr3_dm[2]
+set_location_assignment PIN_F22 -to ddr3_dqs_p[2]
+set_location_assignment PIN_G22 -to ddr3_dqs_n[2]
+set_location_assignment PIN_K20 -to ddr3_dq[24]
+set_location_assignment PIN_L20 -to ddr3_dq[25]
+set_location_assignment PIN_M20 -to ddr3_dq[26]
+set_location_assignment PIN_A22 -to ddr3_dq[27]
+set_location_assignment PIN_B21 -to ddr3_dq[28]
+set_location_assignment PIN_B20 -to ddr3_dq[29]
+set_location_assignment PIN_F20 -to ddr3_dq[30]
+set_location_assignment PIN_G20 -to ddr3_dq[31]
+set_location_assignment PIN_K21 -to ddr3_dm[3]
+set_location_assignment PIN_D20 -to ddr3_dqs_p[3]
+set_location_assignment PIN_E20 -to ddr3_dqs_n[3]
+set_location_assignment PIN_E32 -to ddr3_oct_rzq
+# user I/O
+set_location_assignment PIN_A14 -to user_pb[0]
+set_location_assignment PIN_B15 -to user_pb[1]
+set_location_assignment PIN_B14 -to cpu_resetn
+set_location_assignment PIN_C16 -to user_led[0]
+set_location_assignment PIN_C14 -to user_led[1]
+set_location_assignment PIN_C13 -to user_led[2]
+set_location_assignment PIN_D16 -to user_led[3]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to user_led
+set_instance_assignment -name IO_STANDARD "2.5 V" -to user_pb
+set_instance_assignment -name IO_STANDARD "2.5 V" -to cpu_resetn
+
+
+
+
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output
+
+set_global_assignment -name OPTIMIZATION_TECHNIQUE SPEED
+set_global_assignment -name SYNTH_TIMING_DRIVEN_SYNTHESIS ON
+set_global_assignment -name ADV_NETLIST_OPT_SYNTH_WYSIWYG_REMAP ON
+set_global_assignment -name OPTIMIZE_POWER_DURING_SYNTHESIS OFF
+set_global_assignment -name OPTIMIZE_HOLD_TIMING "ALL PATHS"
+set_global_assignment -name OPTIMIZE_MULTI_CORNER_TIMING ON
+set_global_assignment -name OPTIMIZE_POWER_DURING_FITTING OFF
+set_global_assignment -name FITTER_EFFORT "STANDARD FIT"
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "28 MM HEAT SINK WITH 400 LFPM AIRFLOW"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+
+
+
+
+set_instance_assignment -name IO_STANDARD "SSTL-15" -to ddr3_oct_rzq -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[0] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[1] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[2] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[3] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[4] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[5] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[6] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[7] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[8] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[9] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[10] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[11] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[12] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[13] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[14] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[15] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[16] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[17] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[18] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[19] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[20] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[21] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[22] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[23] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[24] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[25] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[26] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[27] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[28] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[29] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[30] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dq[31] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "DIFFERENTIAL 1.5-V SSTL CLASS I" -to ddr3_dqs_p[0] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "DIFFERENTIAL 1.5-V SSTL CLASS I" -to ddr3_dqs_p[1] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "DIFFERENTIAL 1.5-V SSTL CLASS I" -to ddr3_dqs_p[2] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "DIFFERENTIAL 1.5-V SSTL CLASS I" -to ddr3_dqs_p[3] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "DIFFERENTIAL 1.5-V SSTL CLASS I" -to ddr3_dqs_n[0] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "DIFFERENTIAL 1.5-V SSTL CLASS I" -to ddr3_dqs_n[1] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "DIFFERENTIAL 1.5-V SSTL CLASS I" -to ddr3_dqs_n[2] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "DIFFERENTIAL 1.5-V SSTL CLASS I" -to ddr3_dqs_n[3] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "DIFFERENTIAL 1.5-V SSTL CLASS I" -to ddr3_ck_p -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "DIFFERENTIAL 1.5-V SSTL CLASS I" -to ddr3_ck_n -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_a[0] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_a[10] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_a[11] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_a[12] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_a[1] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_a[2] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_a[3] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_a[4] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_a[5] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_a[6] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_a[7] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_a[8] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_a[9] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_ba[0] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_ba[1] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_ba[2] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_casn -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_cke -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_csn -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_odt -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_rasn -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_wen -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD 1.5V -to ddr3_rstn -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dm[0] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dm[1] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dm[2] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to ddr3_dm[3] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name IO_STANDARD "SSTL-15" -to clkin_100 -tag __a5_sopc_ddr3_emif_p0
+set_global_assignment -name UNIPHY_SEQUENCER_DQS_CONFIG_ENABLE ON
+set_global_assignment -name ECO_REGENERATE_REPORT ON
+
+
+
+
+
+
+
+
+
+
+
+
+
+set_global_assignment -name VERILOG_MACRO "SCR1_ARCH_CUSTOM=1"
+set_global_assignment -name VERILOG_MACRO "TECHNOLOGY=\"ALTERA\""
+set_global_assignment -name VERILOG_MACRO "SCR1_TARGET_ALTERA=ALTERA"
+set_global_assignment -name VERILOG_MACRO "SCR1_EXT_TARGET_FPGA=ALTERA"
+
+
+set_global_assignment -name SEARCH_PATH ip
+set_global_assignment -name SEARCH_PATH ip/uart
+set_global_assignment -name SEARCH_PATH ../../../scr1/src/includes
+
+
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/pipeline/scr1_pipe_ifu.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/pipeline/scr1_pipe_idu.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/pipeline/scr1_pipe_exu.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/pipeline/scr1_pipe_csr.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/pipeline/scr1_pipe_dbga.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/pipeline/scr1_pipe_ialu.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/pipeline/scr1_pipe_lsu.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/pipeline/scr1_pipe_mprf.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/pipeline/scr1_brkm_matcher.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/pipeline/scr1_pipe_brkm.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/pipeline/scr1_ipic.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/pipeline/scr1_pipe_top.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/core/scr1_dbgc.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/core/scr1_tapc_shift_reg.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/core/scr1_tapc_data_reg.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/core/scr1_tapc_synchronizer.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/core/scr1_tapc.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/core/scr1_sync_rstn.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/core/scr1_core_top.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/top/scr1_imem_router.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/top/scr1_mem_axi.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/top/scr1_dmem_router.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/top/scr1_dp_memory.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/top/scr1_tcm.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/top/scr1_timer.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/top/scr1_top_axi.sv
+set_global_assignment -name QSYS_FILE qsys/a5_sopc.qsys
+set_global_assignment -name NUM_PARALLEL_PROCESSORS ALL
+set_global_assignment -name SYSTEMVERILOG_FILE a5_sdk.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ip/pll.v
+set_global_assignment -name VERILOG_FILE ip/uart/timescale.v
+set_global_assignment -name VERILOG_FILE ip/uart/raminfr.v
+set_global_assignment -name VERILOG_FILE ip/uart/uart_wb.v
+set_global_assignment -name VERILOG_FILE ip/uart/uart_transmitter.v
+set_global_assignment -name VERILOG_FILE ip/uart/uart_top.v
+set_global_assignment -name VERILOG_FILE ip/uart/uart_tfifo.v
+set_global_assignment -name VERILOG_FILE ip/uart/uart_sync_flops.v
+set_global_assignment -name VERILOG_FILE ip/uart/uart_rfifo.v
+set_global_assignment -name VERILOG_FILE ip/uart/uart_regs.v
+set_global_assignment -name VERILOG_FILE ip/uart/uart_receiver.v
+
+set_global_assignment -name SDC_FILE a5_sdk.sdc
+set_global_assignment -name TIMEQUEST_MULTICORNER_ANALYSIS ON
+set_global_assignment -name PHYSICAL_SYNTHESIS_COMBO_LOGIC ON
+set_global_assignment -name PHYSICAL_SYNTHESIS_REGISTER_RETIMING ON
+set_global_assignment -name PHYSICAL_SYNTHESIS_ASYNCHRONOUS_SIGNAL_PIPELINING OFF
+set_global_assignment -name PHYSICAL_SYNTHESIS_REGISTER_DUPLICATION ON
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_instance_assignment -name GLOBAL_SIGNAL "GLOBAL CLOCK" -to jtag_tck
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to jtag_tdo
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[0] -to ddr3_dq[0]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[0] -to ddr3_dq[1]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[0] -to ddr3_dq[2]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[0] -to ddr3_dq[3]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[0] -to ddr3_dq[4]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[0] -to ddr3_dq[5]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[0] -to ddr3_dq[6]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[0] -to ddr3_dq[7]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[1] -to ddr3_dq[8]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[1] -to ddr3_dq[9]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[1] -to ddr3_dq[10]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[1] -to ddr3_dq[11]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[1] -to ddr3_dq[12]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[1] -to ddr3_dq[13]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[1] -to ddr3_dq[14]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[1] -to ddr3_dq[15]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[2] -to ddr3_dq[16]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[2] -to ddr3_dq[17]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[2] -to ddr3_dq[18]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[2] -to ddr3_dq[19]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[2] -to ddr3_dq[20]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[2] -to ddr3_dq[21]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[2] -to ddr3_dq[22]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[2] -to ddr3_dq[23]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[3] -to ddr3_dq[24]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[3] -to ddr3_dq[25]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[3] -to ddr3_dq[26]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[3] -to ddr3_dq[27]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[3] -to ddr3_dq[28]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[3] -to ddr3_dq[29]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[3] -to ddr3_dq[30]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[3] -to ddr3_dq[31]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[1] -to ddr3_dm[1]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[2] -to ddr3_dm[2]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[3] -to ddr3_dm[3]
+set_instance_assignment -name DQ_GROUP 9 -from ddr3_dqs_p[0] -to ddr3_dm[0]
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[0] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[0] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[1] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[1] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[2] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[2] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[3] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[3] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[4] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[4] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[5] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[5] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[6] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[6] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[7] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[7] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[8] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[8] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[9] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[9] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[10] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[10] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[11] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[11] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[12] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[12] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[13] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[13] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[14] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[14] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[15] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[15] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[16] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[16] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[17] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[17] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[18] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[18] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[19] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[19] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[20] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[20] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[21] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[21] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[22] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[22] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[23] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[23] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[24] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[24] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[25] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[25] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[26] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[26] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[27] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[27] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[28] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[28] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[29] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[29] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[30] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[30] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dq[31] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dq[31] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dqs_p[0] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dqs_p[0] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dqs_p[1] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dqs_p[1] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dqs_p[2] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dqs_p[2] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dqs_p[3] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dqs_p[3] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dqs_n[0] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dqs_n[0] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dqs_n[1] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dqs_n[1] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dqs_n[2] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dqs_n[2] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name INPUT_TERMINATION "PARALLEL 50 OHM WITH CALIBRATION" -to ddr3_dqs_n[3] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dqs_n[3] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to ddr3_ck_p -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name D5_DELAY 2 -to ddr3_ck_p -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to ddr3_ck_n -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name D5_DELAY 2 -to ddr3_ck_n -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to ddr3_a[0] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to ddr3_a[10] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to ddr3_a[11] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to ddr3_a[12] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to ddr3_a[1] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to ddr3_a[2] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to ddr3_a[3] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to ddr3_a[4] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to ddr3_a[5] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to ddr3_a[6] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to ddr3_a[7] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to ddr3_a[8] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to ddr3_a[9] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to ddr3_ba[0] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to ddr3_ba[1] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to ddr3_ba[2] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to ddr3_casn -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to ddr3_cke -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to ddr3_csn -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to ddr3_odt -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to ddr3_rasn -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to ddr3_wen -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to ddr3_rstn -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dm[0] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dm[1] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dm[2] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITH CALIBRATION" -to ddr3_dm[3] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[0] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[1] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[2] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[3] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[4] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[5] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[6] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[7] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[8] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[9] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[10] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[11] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[12] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[13] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[14] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[15] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[16] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[17] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[18] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[19] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[20] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[21] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[22] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[23] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[24] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[25] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[26] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[27] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[28] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[29] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[30] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dq[31] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dm[0] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dm[1] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dm[2] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dm[3] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dqs_p[0] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dqs_p[1] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dqs_p[2] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dqs_p[3] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dqs_n[0] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dqs_n[1] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dqs_n[2] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_dqs_n[3] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_a[0] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_a[10] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_a[11] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_a[12] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_a[1] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_a[2] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_a[3] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_a[4] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_a[5] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_a[6] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_a[7] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_a[8] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_a[9] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_ba[0] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_ba[1] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_ba[2] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_casn -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_cke -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_csn -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_odt -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_rasn -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_wen -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_rstn -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_ck_p -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PACKAGE_SKEW_COMPENSATION OFF -to ddr3_ck_n -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name GLOBAL_SIGNAL "DUAL-REGIONAL CLOCK" -to i_a5_sopc|ddr3_emif|pll0|pll_avl_clk -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name GLOBAL_SIGNAL "DUAL-REGIONAL CLOCK" -to i_a5_sopc|ddr3_emif|pll0|pll_config_clk -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name GLOBAL_SIGNAL OFF -to i_a5_sopc|ddr3_emif|p0|umemphy|ureset|phy_reset_mem_stable_n -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name GLOBAL_SIGNAL OFF -to i_a5_sopc|ddr3_emif|p0|umemphy|ureset|phy_reset_n -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name GLOBAL_SIGNAL OFF -to i_a5_sopc|ddr3_emif|s0|sequencer_rw_mgr_inst|rw_mgr_inst|rw_mgr_core_inst|rw_soft_reset_n -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name GLOBAL_SIGNAL OFF -to i_a5_sopc|ddr3_emif|p0|umemphy|uio_pads|dq_ddio[0].read_capture_clk_buffer -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name GLOBAL_SIGNAL OFF -to i_a5_sopc|ddr3_emif|p0|umemphy|uread_datapath|reset_n_fifo_write_side[0] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name GLOBAL_SIGNAL OFF -to i_a5_sopc|ddr3_emif|p0|umemphy|uread_datapath|reset_n_fifo_wraddress[0] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name GLOBAL_SIGNAL OFF -to i_a5_sopc|ddr3_emif|p0|umemphy|uio_pads|dq_ddio[1].read_capture_clk_buffer -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name GLOBAL_SIGNAL OFF -to i_a5_sopc|ddr3_emif|p0|umemphy|uread_datapath|reset_n_fifo_write_side[1] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name GLOBAL_SIGNAL OFF -to i_a5_sopc|ddr3_emif|p0|umemphy|uread_datapath|reset_n_fifo_wraddress[1] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name GLOBAL_SIGNAL OFF -to i_a5_sopc|ddr3_emif|p0|umemphy|uio_pads|dq_ddio[2].read_capture_clk_buffer -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name GLOBAL_SIGNAL OFF -to i_a5_sopc|ddr3_emif|p0|umemphy|uread_datapath|reset_n_fifo_write_side[2] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name GLOBAL_SIGNAL OFF -to i_a5_sopc|ddr3_emif|p0|umemphy|uread_datapath|reset_n_fifo_wraddress[2] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name GLOBAL_SIGNAL OFF -to i_a5_sopc|ddr3_emif|p0|umemphy|uio_pads|dq_ddio[3].read_capture_clk_buffer -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name GLOBAL_SIGNAL OFF -to i_a5_sopc|ddr3_emif|p0|umemphy|uread_datapath|reset_n_fifo_write_side[3] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name GLOBAL_SIGNAL OFF -to i_a5_sopc|ddr3_emif|p0|umemphy|uread_datapath|reset_n_fifo_wraddress[3] -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name ENABLE_BENEFICIAL_SKEW_OPTIMIZATION_FOR_NON_GLOBAL_CLOCKS ON -to i_a5_sopc|ddr3_emif -tag __a5_sopc_ddr3_emif_p0
+set_instance_assignment -name PLL_COMPENSATION_MODE DIRECT -to i_a5_sopc|ddr3_emif|pll0|fbout -tag __a5_sopc_ddr3_emif_p0
+set_global_assignment -name ROUTER_LCELL_INSERTION_AND_LOGIC_DUPLICATION ON
+set_global_assignment -name ROUTER_TIMING_OPTIMIZATION_LEVEL MAXIMUM
+set_global_assignment -name AUTO_PACKED_REGISTERS_STRATIXII NORMAL
+set_global_assignment -name MUX_RESTRUCTURE OFF
+set_global_assignment -name ROUTER_CLOCKING_TOPOLOGY_ANALYSIS ON
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

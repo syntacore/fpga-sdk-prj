@@ -1,0 +1,26 @@
+{ "" "" "" "Variable or input pin \"byteena_b\" is defined but never used." {  } {  } 0 287013 "" 0 0 "Quartus II" 0 -1 0 ""}
+{ "" "" "" "34 hierarchies have connectivity warnings - see the Connectivity Checks report folder" {  } {  } 0 12241 "" 0 0 "Quartus II" 0 -1 0 ""}
+{ "" "" "" "*" {  } {  } 0 12250 "" 0 0 "Quartus II" 0 -1 0 ""}
+{ "" "" "" "*" {  } {  } 0 12251 "" 0 0 "Quartus II" 0 -1 0 ""}
+{ "" "" "" "*" {  } {  } 0 12021 "" 0 0 "Quartus II" 0 -1 0 ""}
+{ "" "" "" "*" {  } {  } 0 10281 "" 0 0 "Quartus II" 0 -1 0 ""}
+{ "" "" "" "*" {  } {  } 0 12128 "" 0 0 "Quartus II" 0 -1 0 ""}
+{ "" "" "" "*" {  } {  } 0 10264 "" 0 0 "Quartus II" 0 -1 0 ""}
+{ "" "" "" "*" {  } {  } 0 12133 "" 0 0 "Quartus II" 0 -1 0 ""}
+{ "" "" "" "*" {  } {  } 0 12130 "" 0 0 "Quartus II" 0 -1 0 ""}
+{ "" "" "" "*" {  } {  } 0 10648 "" 0 0 "Quartus II" 0 -1 0 ""}
+{ "" "" "" "*" {  } {  } 0 276020 "" 0 0 "Quartus II" 0 -1 0 ""}
+{ "" "" "" "*" {  } {  } 0 332060 "" 0 0 "Quartus II" 0 -1 0 ""}
+{ "" "" "" "*" {  } {  } 0 13024 "" 0 0 "Quartus II" 0 -1 0 ""}
+{ "" "" "" "uart_regs.v" {  } {  } 0 9999 "" 0 0 "Quartus II" 0 -1 0 ""}
+{ "" "" "" "uart_wb.v" {  } {  } 0 9999 "" 0 0 "Quartus II" 0 -1 0 ""}
+{ "" "" "" "uart_receiver.v" {  } {  } 0 9999 "" 0 0 "Quartus II" 0 -1 0 ""}
+{ "" "" "" "altera_mem_if_hard_memory_controller_top_arriav.sv" {  } {  } 0 9999 "" 0 0 "Quartus II" 0 -1 0 ""}
+{ "" "" "" "altera_axi_default_slave.sv" {  } {  } 0 9999 "" 0 0 "Quartus II" 0 -1 0 ""}
+{ "" "" "" "altera_merlin_burst_adapter.sv" {  } {  } 0 9999 "" 0 0 "Quartus II" 0 -1 0 ""}
+{ "" "" "" "a5_sopc_ddr3_emif_p0_acv_hard_io_pads.v" {  } {  } 0 9999 "" 0 0 "Quartus II" 0 -1 0 ""}
+{ "" "" "" "a5_sopc_ddr3_emif_p0_acv_hard_memphy.v" {  } {  } 0 9999 "" 0 0 "Quartus II" 0 -1 0 ""}
+{ "" "" "" "altera_merlin_width_adapter.sv" {  } {  } 0 9999 "" 0 0 "Quartus II" 0 -1 0 ""}
+{ "" "" "" "altera_merlin_axi_slave_ni.sv" {  } {  } 0 9999 "" 0 0 "Quartus II" 0 -1 0 ""}
+{ "" "" "" "altera_pll.v" {  } {  } 0 9999 "" 0 0 "Quartus II" 0 -1 0 ""}
+{ "" "" "" "altera_mem_if_sequencer_rst.sv" {  } {  } 0 9999 "" 0 0 "Quartus II" 0 -1 0 ""}
