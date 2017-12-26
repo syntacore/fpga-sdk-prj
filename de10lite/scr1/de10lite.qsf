@@ -2,7 +2,7 @@ set_global_assignment -name FAMILY "MAX 10"
 set_global_assignment -name DEVICE 10M50DAF484C7G
 set_global_assignment -name TOP_LEVEL_ENTITY "de10lite"
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 16.0.0
-set_global_assignment -name LAST_QUARTUS_VERSION "17.0.1 Standard Edition"
+set_global_assignment -name LAST_QUARTUS_VERSION "17.1.0 Lite Edition"
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "13:36:13 AUGUST 25,2017"
 set_global_assignment -name DEVICE_FILTER_PACKAGE FBGA
 set_global_assignment -name DEVICE_FILTER_PIN_COUNT 484
@@ -358,6 +358,7 @@ set_global_assignment -name VERILOG_MACRO "SCR1_ARCH_CUSTOM=1"
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output
 set_global_assignment -name SEARCH_PATH ../../../scr1/src/includes
 set_global_assignment -name SEARCH_PATH ip
+set_global_assignment -name SEARCH_PATH ip/uart
 
 
 
@@ -402,6 +403,17 @@ set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/top/scr1_tcm.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/top/scr1_timer.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/top/scr1_top_ahb.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ip/ahb_avalon_bridge.sv
+set_global_assignment -name VERILOG_FILE ip/uart/timescale.v
+set_global_assignment -name VERILOG_FILE ip/uart/raminfr.v
+set_global_assignment -name VERILOG_FILE ip/uart/uart_wb.v
+set_global_assignment -name VERILOG_FILE ip/uart/uart_transmitter.v
+set_global_assignment -name VERILOG_FILE ip/uart/uart_top.v
+set_global_assignment -name VERILOG_FILE ip/uart/uart_tfifo.v
+set_global_assignment -name VERILOG_FILE ip/uart/uart_sync_flops.v
+set_global_assignment -name VERILOG_FILE ip/uart/uart_rfifo.v
+set_global_assignment -name VERILOG_FILE ip/uart/uart_regs.v
+set_global_assignment -name VERILOG_FILE ip/uart/uart_receiver.v
+
 set_global_assignment -name QSYS_FILE qsys/de10lite_qsys.qsys
 set_global_assignment -name ENABLE_OCT_DONE OFF
 set_global_assignment -name EXTERNAL_FLASH_FALLBACK_ADDRESS 00000000

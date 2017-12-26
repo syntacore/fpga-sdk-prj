@@ -201,8 +201,67 @@ scr1_top_ahb i_scr1 (
         .dmem_hresp                 (ahb_dmem_hresp         )
 );
 
+//
+// UART 16550 IP
+//
+logic [31:0]    uart_readdata;
+logic           uart_readdatavalid;
+logic [31:0]    uart_writedata;
+logic  [4:0]    uart_address;
+logic           uart_write;
+logic           uart_read;
+logic           uart_waitrequest;
+
+logic           wb_ack;
+logic  [7:0]    wb_dat;
+logic           read_valid;
 
 
+
+always_ff @(posedge clk_riscv, negedge rst_n)
+if (~rst_n)                 read_valid <= '0;
+    else if (wb_ack)        read_valid <= '0;
+    else if (uart_read)     read_valid <= '1;
+
+
+always_ff @(posedge clk_riscv) begin
+    uart_readdatavalid  <= wb_ack & read_valid;
+    uart_readdata       <= {24'd0,wb_dat};
+end
+
+
+assign uart_waitrequest = ~wb_ack;
+
+
+uart_top i_uart(
+        .wb_clk_i                   (clk_riscv              ),
+        // Wishbone signals
+        .wb_rst_i                   (~rst_n                 ),
+        .wb_adr_i                   (uart_address[4:2]      ),
+        .wb_dat_i                   (uart_writedata[7:0]    ),
+        .wb_dat_o                   (wb_dat                 ),
+        .wb_we_i                    (uart_write             ),
+        .wb_stb_i                   (read_valid|uart_write  ),
+        .wb_cyc_i                   (read_valid|uart_write  ),
+        .wb_ack_o                   (wb_ack                 ),
+        .wb_sel_i                   (4'd1                   ),
+        .int_o                      (riscv0_irq             ),
+
+        .stx_pad_o                  (UART_RXD               ),
+        .srx_pad_i                  (UART_TXD               ),
+
+        .rts_pad_o                  (                       ),
+        .cts_pad_i                  ('1                     ),
+        .dtr_pad_o                  (                       ),
+        .dsr_pad_i                  ('1                     ),
+        .ri_pad_i                   ('1                     ),
+        .dcd_pad_i                  ('1                     )
+        );
+
+
+//
+// AHB IMEM Bridge
+//
 
 ahb_avalon_bridge i_ahb_imem (
         // avalon master side
@@ -229,6 +288,10 @@ ahb_avalon_bridge i_ahb_imem (
         .HREADY                     (ahb_imem_hready        )
 );
 
+//
+// AHB DMEM Bridge
+//
+
 ahb_avalon_bridge i_ahb_dmem (
         // avalon master side
         .clk                        (clk_riscv              ),
@@ -254,6 +317,8 @@ ahb_avalon_bridge i_ahb_dmem (
         .HREADY                     (ahb_dmem_hready        )
 );
 
+
+
 de10lite_qsys i_de10lite_qsys (
         .clk_clk                    (clk_riscv              ),
         .clk_sdram_clk              (clk_sdram              ),
@@ -266,9 +331,17 @@ de10lite_qsys i_de10lite_qsys (
         .pio_led_export             (LEDR                   ),
         .pio_sw_export              (SW                     ),
         .bld_id_export              (FPGA_DE10_BUILD_ID     ),
-        .riscv0_irq                 (riscv0_irq             ),
-        .uart_sin                   (UART_TXD               ),
-        .uart_sout                  (UART_RXD               ),
+
+        .uart_waitrequest           (uart_waitrequest       ),
+        .uart_readdata              (uart_readdata          ),
+        .uart_readdatavalid         (uart_readdatavalid     ),
+        .uart_burstcount            (                       ),
+        .uart_writedata             (uart_writedata         ),
+        .uart_address               (uart_address           ),
+        .uart_write                 (uart_write             ),
+        .uart_read                  (uart_read              ),
+        .uart_byteenable            (                       ),
+        .uart_debugaccess           (                       ),
 
         .sdram_addr                 (DRAM_ADDR              ),
         .sdram_ba                   (DRAM_BA                ),
