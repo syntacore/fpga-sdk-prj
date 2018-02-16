@@ -2,7 +2,7 @@
 
 ## Key features
 * Board: Digilent Arty (https://reference.digilentinc.com/reference/programmable-logic/arty/start)
-* Tool: Xilinx Vivado Design Suite 2016.4
+* Tool: Xilinx Vivado Design Suite 2017.3
 
 ## Folder contents
 Folder | Description
@@ -58,7 +58,7 @@ Base Address | Length | Name | Description
 0x00000000   | 256 MB | Reserved | Reserved for onboard DDR3L SDRAM.
 0xF0000000   | 64  kB | TCM  | SCR1 Tightly-Coupled Memory (refer to SCR1 EAS).
 0xF0040000   | 32   B | Timer | SCR1 Timer registers (refer to SCR1 EAS).
-0xFF000000   |  | MMIO BASE  | Base address for Memory-Mapped Peripheral IO resources, resided externally to SCR1 core. 
+0xFF000000   |  | MMIO BASE  | Base address for Memory-Mapped Peripheral IO resources, resided externally to SCR1 core.
 0xFF000000   | 4   kB | SYS_ID | 32-bit System ID register.
 0xFF001000   | 4   kB | BLD_ID | 32-bit Build ID register.
 0xFF010000   | 4   kB | UART | 16550 UART registers (refer to Xilinx IP description for details). Interrupt line is assigned to IRQ[0].
@@ -71,7 +71,7 @@ Base Address | Length | Name | Description
 ### PIO_LED_RGB, Programmable IO LED RGB Control Register (0xFF020000)
 Bit(s) | Name | Description
 -------| ---- | -----------
-0..2   | LED0 | LED[0] control: bits [2:0] correspond to {red, green, blue} partial LEDs of the onboard LD0. If a bit is 1, appropriate internal LED is illuminated. 
+0..2   | LED0 | LED[0] control: bits [2:0] correspond to {red, green, blue} partial LEDs of the onboard LD0. If a bit is 1, appropriate internal LED is illuminated.
 3..5   | LED1 | LED[1] control (onboard LD1).
 6..8   | LED2 | LED[2] control (onboard LD2).
 9..11  | LED3 | LED[3] control (onboard LD3).
