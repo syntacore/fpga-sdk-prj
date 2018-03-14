@@ -6,7 +6,7 @@
 ///
 
 `define SCR1_TARGET_FPGA_XILINX
-`define SCR1_ARCH_BUILD_ID          32'h17101000
+`define SCR1_ARCH_BUILD_ID          32'h18031400
 `define SCR1_ARCH_SYS_ID            32'h17090400
 
 //-------------------------------------------------------------------------------

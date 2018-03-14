@@ -6,7 +6,7 @@
 ///
 
 `define SCR1_TARGET_FPGA_INTEL      TERASIC_DE10
-`define SCR1_ARCH_BUILD_ID          32'h17121400
+`define SCR1_ARCH_BUILD_ID          32'h18031400
 
 //-------------------------------------------------------------------------------
 // Core configurable parameters (customized for SCR1 Arty SDK)
