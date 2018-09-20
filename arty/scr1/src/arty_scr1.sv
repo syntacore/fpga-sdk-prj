@@ -5,6 +5,7 @@
 
 `include "scr1_arch_types.svh"
 `include "scr1_arch_description.svh"
+`include "scr1_arch_custom.svh"
 `include "scr1_memif.svh"
 `ifdef SCR1_IPIC_EN
 `include "scr1_ipic.svh"
@@ -57,7 +58,7 @@ logic [SCR1_AHB_WIDTH-1:0]          ahb_imem_haddr;
 logic                               ahb_imem_hready;
 logic [SCR1_AHB_WIDTH-1:0]          ahb_imem_hrdata;
 logic                               ahb_imem_hresp;
-//                                  
+//
 logic [3:0]                         ahb_dmem_hprot;
 logic [2:0]                         ahb_dmem_hburst;
 logic [2:0]                         ahb_dmem_hsize;
@@ -155,7 +156,7 @@ i_scr1 (
     .tck                        (jtag_tck),
     .tms                        (jtag_tms),
     .tdi                        (jtag_tdi),
-    .tdo                        (jtag_tdo), 
+    .tdo                        (jtag_tdo),
     .tdo_en                     (jtag_tdo_en),
 `endif // SCR1_DBGC_EN
 
