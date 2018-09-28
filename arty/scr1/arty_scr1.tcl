@@ -35,11 +35,12 @@ proc help {} {
 }
 
 if { $::argc > 0 } {
-  for {set i 0} {$i < [llength $::argc]} {incr i} {
+  for {set i 0} {$i < $::argc} {incr i} {
     set option [string trim [lindex $::argv $i]]
     switch -regexp -- $option {
-      "--origin_dir" { incr i; set origin_dir [lindex $::argv $i] }
-      "--help"       { help }
+      "--origin_dir"   { incr i; set origin_dir [lindex $::argv $i] }
+      "--project_name" { incr i; set _xil_proj_name_ [lindex $::argv $i] }
+      "--help"         { help }
       default {
         if { [regexp {^-} $option] } {
           puts "ERROR: Unknown option '$option' specified, please type '$script_file -tclargs --help' for usage info.\n"
@@ -875,15 +876,15 @@ set_property "xsim.wdb" "" $obj
 
 # Create 'synth_1' run (if not found)
 if {[string equal [get_runs -quiet synth_1] ""]} {
-  create_run -name synth_1 -part xc7a35ticsg324-1L -flow {Vivado Synthesis 2017} -strategy "Flow_PerfOptimized_high" -constrset constrs_1
+  create_run -name synth_1 -part xc7a35ticsg324-1L -flow {Vivado Synthesis 2018} -strategy "Flow_PerfOptimized_high" -constrset constrs_1
 } else {
   set_property strategy "Flow_PerfOptimized_high" [get_runs synth_1]
-  set_property flow "Vivado Synthesis 2017" [get_runs synth_1]
+  set_property flow "Vivado Synthesis 2018" [get_runs synth_1]
 }
 set obj [get_runs synth_1]
 set_property "constrset" "constrs_1" $obj
 set_property "description" "Higher performance designs, resource sharing is turned off, the global fanout guide is set to a lower number, FSM extraction forced to one-hot, LUT combining is disabled, equivalent registers are preserved, SRL are inferred  with a larger threshold" $obj
-set_property "flow" "Vivado Synthesis 2017" $obj
+set_property "flow" "Vivado Synthesis 2018" $obj
 set_property "name" "synth_1" $obj
 set_property "needs_refresh" "0" $obj
 set_property "srcset" "sources_1" $obj
@@ -919,15 +920,15 @@ current_run -synthesis [get_runs synth_1]
 
 # Create 'impl_1' run (if not found)
 if {[string equal [get_runs -quiet impl_1] ""]} {
-  create_run -name impl_1 -part xc7a35ticsg324-1L -flow {Vivado Implementation 2017} -strategy "Performance_WLBlockPlacement" -constrset constrs_2 -parent_run synth_1
+  create_run -name impl_1 -part xc7a35ticsg324-1L -flow {Vivado Implementation 2018} -strategy "Performance_WLBlockPlacement" -constrset constrs_2 -parent_run synth_1
 } else {
   set_property strategy "Performance_WLBlockPlacement" [get_runs impl_1]
-  set_property flow "Vivado Implementation 2017" [get_runs impl_1]
+  set_property flow "Vivado Implementation 2018" [get_runs impl_1]
 }
 set obj [get_runs impl_1]
 set_property "constrset" "constrs_2" $obj
 set_property "description" "Ignore timing constraints for placing Block RAM and DSPs, use wirelength instead." $obj
-set_property "flow" "Vivado Implementation 2017" $obj
+set_property "flow" "Vivado Implementation 2018" $obj
 set_property "name" "impl_1" $obj
 set_property "needs_refresh" "0" $obj
 set_property "pr_configuration" "" $obj
