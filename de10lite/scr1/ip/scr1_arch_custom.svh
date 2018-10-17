@@ -6,7 +6,7 @@
 ///
 
 `define SCR1_TARGET_FPGA_INTEL
-`define SCR1_ARCH_BUILD_ID          32'h18091900
+`define SCR1_ARCH_BUILD_ID          32'h18100900
 
 
 
