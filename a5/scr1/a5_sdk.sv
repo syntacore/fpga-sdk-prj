@@ -1,6 +1,6 @@
+/// Copyright by Syntacore LLC © 2016, 2017. See LICENSE for details
 /// @file       <a5_sdk.sv>
 /// @brief      SC_RISCV_SDK @Arria V Starter kit
-/// @authors    an-sc
 ///
 
 `include "scr1_arch_types.svh"
@@ -59,10 +59,10 @@ module a5_sdk (
 //=======================================================
 logic                   pll_locked;
 logic                   clk_riscv;
-logic                   pwron_rst_in_n;
-logic                   pwron_rst_in_ff1;
-logic                   pwron_rst_in_ff2;
-logic                   pwron_rst_n;
+logic                   pwrup_rst_n;
+logic [ 3:0]            rst_in_ff;
+logic                   rst_n;
+logic                   wb_rst_n;
 logic                   ddr3_init_done;
 logic                   ddr3_cal_success;
 logic                   ddr3_cal_fail;
@@ -146,28 +146,27 @@ logic                   riscv_jtag_tdo_int_cpu0;
 
 
 
-assign pwron_rst_in_n   =  pll_locked;
+assign pwrup_rst_n   =  pll_locked;
 
 pll
 i_pll (
-    .rst        (~cpu_resetn    ),
+    .rst        (1'b0           ),
     .refclk     (clkin_50       ),
     .outclk_0   (clk_riscv      ),
     .locked     (pll_locked     )
 );
 
-always_ff @(posedge clk_riscv, negedge pwron_rst_in_n)
+always_ff @(posedge clk_riscv, negedge pwrup_rst_n)
 begin
-    if (pwron_rst_in_n == 1'b0) begin
-        pwron_rst_in_ff1 <= 1'b0;
-        pwron_rst_in_ff2 <= 1'b0;
+    if (pwrup_rst_n == 1'b0) begin
+        rst_in_ff  <= '0;
     end
     else begin
-        pwron_rst_in_ff1 <= pwron_rst_in_n;
-        pwron_rst_in_ff2 <= pwron_rst_in_ff1;
+        rst_in_ff <= {rst_in_ff[2:0], cpu_resetn};
     end
 end
-assign pwron_rst_n = pwron_rst_in_ff2;
+assign wb_rst_n = rst_in_ff[1];
+assign rst_n    = rst_in_ff[3];
 
 
 
@@ -178,14 +177,24 @@ assign riscv_irq = {31'd0, riscv0_irq};
 
 
 scr1_top_axi i_scr_top(
-
     // Common
-    .rst_n                              (pwron_rst_n            ),
-    .test_mode                          (1'd0                   ),
+    .pwrup_rst_n                        (pwrup_rst_n            ),
+    .rst_n                              (rst_n                  ),
+    .cpu_rst_n                          (1'b1                   ),
+    .test_mode                          (1'b0                   ),
+    .test_rst_n                         (1'b1                   ),
     .clk                                (clk_riscv              ),
     .rtc_clk                            (1'b0                   ),
-    .rst_n_out                          (                       ),
-    .fuse_mhartid                       (32'd0                  ),
+`ifdef SCR1_DBGC_EN
+    .ndm_rst_n_out                      (                       ),
+`endif // SCR1_DBGC_EN
+
+    // Fuses
+    .fuse_mhartid                       ('0                     ),
+`ifdef SCR1_DBGC_EN
+    .fuse_idcode                        (`SCR1_TAP_IDCODE       ),
+`endif // SCR1_DBGC_EN
+
     .irq_lines                          (riscv_irq              ),
     .soft_irq                           ('0                     ),
     // Debug Interface
@@ -315,8 +324,8 @@ logic           read_valid;
 
 
 
-always_ff @(posedge clk_riscv, negedge pwron_rst_in_n)
-if (~pwron_rst_in_n)        read_valid <= '0;
+always_ff @(posedge clk_riscv, negedge wb_rst_n)
+if (~wb_rst_n)              read_valid <= '0;
     else if (wb_ack)        read_valid <= '0;
     else if (uart_read)     read_valid <= '1;
 
@@ -333,7 +342,7 @@ assign uart_waitrequest = ~wb_ack;
 uart_top i_uart(
     .wb_clk_i       (clk_riscv              ),
     // Wishbone signals
-    .wb_rst_i       (~pwron_rst_n           ),
+    .wb_rst_i       (~rst_n                 ),
     .wb_adr_i       (uart_address[4:2]      ),
     .wb_dat_i       (uart_writedata[7:0]    ),
     .wb_dat_o       (wb_dat                 ),
@@ -364,7 +373,7 @@ a5_sopc
 i_a5_sopc (
     .clk_emi_clk                        (clkin_100          ),
     .clk_clk                            (clk_riscv          ),
-    .clk_rst_reset_n                    (pwron_rst_n        ),
+    .clk_rst_reset_n                    (rst_n              ),
     //
     .ddr3_mem_a                         (ddr3_a             ),
     .ddr3_mem_ba                        (ddr3_ba            ),

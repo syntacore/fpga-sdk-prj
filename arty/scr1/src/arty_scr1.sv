@@ -47,6 +47,7 @@ logic                               clk_riscv;
 logic                               hard_rst_in_n;
 logic   [1:0]                       hard_rst_in_sync;
 logic                               hard_rst_n;
+logic                               pwrup_rst_n;
 
 // --- SCR1 ---------------------------------------------
 logic [3:0]                         ahb_imem_hprot;
@@ -107,8 +108,10 @@ logic                               heartbeat;
 //=======================================================
 //  Structural coding
 //=======================================================
-assign pll_rst_in_n     = RESETn;
-assign hard_rst_in_n    = RESETn & pll_locked & jtag_srst_n;
+assign pll_rst_in_n     = 1'b1;
+assign pwrup_rst_n      = pll_locked;
+assign hard_rst_in_n    = RESETn & jtag_srst_n & pwrup_rst_n;
+
 
 sys_pll
 i_sys_pll (
@@ -134,13 +137,22 @@ assign hard_rst_n = hard_rst_in_sync[1];
 scr1_top_ahb
 i_scr1 (
     // Common
+    .pwrup_rst_n                (pwrup_rst_n),
     .rst_n                      (hard_rst_n),
-    .rst_n_out                  (),
-    .test_mode                  (1'd0),
+    .cpu_rst_n                  (1'b1),
+    .test_mode                  (1'b0),
+    .test_rst_n                 (1'b1),
     .clk                        (clk_riscv),
     .rtc_clk                    (1'b0),
+`ifdef SCR1_DBGC_EN
+    .ndm_rst_n_out              (),
+`endif // SCR1_DBGC_EN
+
     // Fuses
     .fuse_mhartid               ('0),
+`ifdef SCR1_DBGC_EN
+    .fuse_idcode                (`SCR1_TAP_IDCODE),
+`endif // SCR1_DBGC_EN
 
     // IRQ
 `ifdef SCR1_IPIC_EN

@@ -1,12 +1,6 @@
+/// Copyright by Syntacore LLC © 2016, 2017. See LICENSE for details
 /// @file       <de10lite.sv>
 /// @brief      Top-level entity with SCR1 for DE10-lite board
-/// @authors    an-sc
-///
-/// Copyright by Syntacore LLC © 2016. ALL RIGHTS RESERVED. STRICTLY CONFIDENTIAL.
-/// Information contained in this material is confidential and proprietary to Syntacore LLC
-/// and its affiliates and may not be modified, copied, published, disclosed, distributed,
-/// displayed or exhibited, in either electronic or printed formats without written
-/// authorization of the Syntacore LLC. Subject to License Agreement.
 ///
 
 `include "scr1_arch_types.svh"
@@ -66,6 +60,7 @@ logic                               clk_sdram;
 logic                               rst_in;
 logic [2:1]                         rst_in_d;
 logic                               rst_n;
+logic                               pwrup_rst_n;
 
 
 // --- SCR1 ---------------------------------------------
@@ -120,8 +115,8 @@ logic [1:0]                         avl_dmem_response;
 
 
 
-
-assign rst_in = KEY[0] & pll_locked;
+assign pwrup_rst_n = pll_locked;
+assign rst_in = KEY[0] & pwrup_rst_n;
 
 
 pll i_pll (
@@ -152,12 +147,22 @@ assign rst_n = rst_in_d[2];
 
 scr1_top_ahb i_scr1 (
         // Common
+        .pwrup_rst_n                (pwrup_rst_n            ),
         .rst_n                      (rst_n                  ),
-        .rst_n_out                  (                       ),
-        .test_mode                  ('0                     ),
+        .cpu_rst_n                  (1'b1                   ),
+        .test_mode                  (1'b0                   ),
+        .test_rst_n                 (1'b1                   ),
         .clk                        (clk_riscv              ),
         .rtc_clk                    (1'b0                   ),
+`ifdef SCR1_DBGC_EN
+        .ndm_rst_n_out              (                       ),
+`endif // SCR1_DBGC_EN
+
+        // Fuses
         .fuse_mhartid               ('0                     ),
+`ifdef SCR1_DBGC_EN
+        .fuse_idcode                (`SCR1_TAP_IDCODE       ),
+`endif // SCR1_DBGC_EN
 
         // IRQ
         `ifdef SCR1_IPIC_EN

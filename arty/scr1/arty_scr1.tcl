@@ -115,27 +115,28 @@ set files [list \
  "[file normalize "$origin_dir/../../../scr1/src/includes/scr1_ipic.svh"]"\
  "[file normalize "$origin_dir/../../../scr1/src/includes/scr1_memif.svh"]"\
  "[file normalize "$origin_dir/../../../scr1/src/includes/scr1_ahb.svh"]"\
- "[file normalize "$origin_dir/../../../scr1/src/includes/scr1_brkm.svh"]"\
+ "[file normalize "$origin_dir/../../../scr1/src/includes/scr1_tdu.svh"]"\
+ "[file normalize "$origin_dir/../../../scr1/src/includes/scr1_hdu.svh"]"\
  "[file normalize "$origin_dir/../../../scr1/src/includes/scr1_tapc.svh"]"\
- "[file normalize "$origin_dir/../../../scr1/src/includes/scr1_dbgc.svh"]"\
+ "[file normalize "$origin_dir/../../../scr1/src/includes/scr1_dm.svh"]"\
  "[file normalize "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_mprf.sv"]"\
  "[file normalize "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_lsu.sv"]"\
  "[file normalize "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_ifu.sv"]"\
  "[file normalize "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_idu.sv"]"\
  "[file normalize "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_ialu.sv"]"\
  "[file normalize "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_exu.sv"]"\
- "[file normalize "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_dbga.sv"]"\
+ "[file normalize "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_hdu.sv"]"\
  "[file normalize "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_csr.sv"]"\
  "[file normalize "$origin_dir/../../../scr1/src/pipeline/scr1_ipic.sv"]"\
- "[file normalize "$origin_dir/../../../scr1/src/pipeline/scr1_brkm_matcher.sv"]"\
- "[file normalize "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_brkm.sv"]"\
+  "[file normalize "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_tdu.sv"]"\
  "[file normalize "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_top.sv"]"\
- "[file normalize "$origin_dir/../../../scr1/src/core/scr1_sync_rstn.sv"]"\
- "[file normalize "$origin_dir/../../../scr1/src/core/scr1_dbgc.sv"]"\
+ "[file normalize "$origin_dir/../../../scr1/src/core/primitives/scr1_reset_cells.sv"]"\
+ "[file normalize "$origin_dir/../../../scr1/src/core/scr1_dm.sv"]"\
+ "[file normalize "$origin_dir/../../../scr1/src/core/scr1_dmi.sv"]"\
+ "[file normalize "$origin_dir/../../../scr1/src/core/scr1_scu.sv"]"\
  "[file normalize "$origin_dir/../../../scr1/src/core/scr1_tapc_synchronizer.sv"]"\
  "[file normalize "$origin_dir/../../../scr1/src/core/scr1_tapc_shift_reg.sv"]"\
- "[file normalize "$origin_dir/../../../scr1/src/core/scr1_tapc_data_reg.sv"]"\
- "[file normalize "$origin_dir/../../../scr1/src/core/scr1_tapc.sv"]"\
+  "[file normalize "$origin_dir/../../../scr1/src/core/scr1_tapc.sv"]"\
  "[file normalize "$origin_dir/../../../scr1/src/core/scr1_core_top.sv"]"\
  "[file normalize "$origin_dir/../../../scr1/src/top/scr1_dp_memory.sv"]"\
  "[file normalize "$origin_dir/../../../scr1/src/top/scr1_tcm.sv"]"\
@@ -290,7 +291,19 @@ set_property "used_in" "synthesis simulation" $file_obj
 set_property "used_in_simulation" "1" $file_obj
 set_property "used_in_synthesis" "1" $file_obj
 
-set file "$origin_dir/../../../scr1/src/includes/scr1_brkm.svh"
+set file "$origin_dir/../../../scr1/src/includes/scr1_tdu.svh"
+set file [file normalize $file]
+set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
+set_property "file_type" "Verilog Header" $file_obj
+set_property "is_enabled" "1" $file_obj
+set_property "is_global_include" "0" $file_obj
+set_property "library" "xil_defaultlib" $file_obj
+set_property "path_mode" "RelativeFirst" $file_obj
+set_property "used_in" "synthesis simulation" $file_obj
+set_property "used_in_simulation" "1" $file_obj
+set_property "used_in_synthesis" "1" $file_obj
+
+set file "$origin_dir/../../../scr1/src/includes/scr1_hdu.svh"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
 set_property "file_type" "Verilog Header" $file_obj
@@ -314,7 +327,7 @@ set_property "used_in" "synthesis simulation" $file_obj
 set_property "used_in_simulation" "1" $file_obj
 set_property "used_in_synthesis" "1" $file_obj
 
-set file "$origin_dir/../../../scr1/src/includes/scr1_dbgc.svh"
+set file "$origin_dir/../../../scr1/src/includes/scr1_dm.svh"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
 set_property "file_type" "Verilog Header" $file_obj
@@ -404,7 +417,7 @@ set_property "used_in_implementation" "1" $file_obj
 set_property "used_in_simulation" "1" $file_obj
 set_property "used_in_synthesis" "1" $file_obj
 
-set file "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_dbga.sv"
+set file "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_hdu.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
 set_property "file_type" "SystemVerilog" $file_obj
@@ -443,20 +456,7 @@ set_property "used_in_implementation" "1" $file_obj
 set_property "used_in_simulation" "1" $file_obj
 set_property "used_in_synthesis" "1" $file_obj
 
-set file "$origin_dir/../../../scr1/src/pipeline/scr1_brkm_matcher.sv"
-set file [file normalize $file]
-set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "SystemVerilog" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis implementation simulation" $file_obj
-set_property "used_in_implementation" "1" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
-
-set file "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_brkm.sv"
+set file "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_tdu.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
 set_property "file_type" "SystemVerilog" $file_obj
@@ -482,7 +482,7 @@ set_property "used_in_implementation" "1" $file_obj
 set_property "used_in_simulation" "1" $file_obj
 set_property "used_in_synthesis" "1" $file_obj
 
-set file "$origin_dir/../../../scr1/src/core/scr1_sync_rstn.sv"
+set file "$origin_dir/../../../scr1/src/core/primitives/scr1_reset_cells.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
 set_property "file_type" "SystemVerilog" $file_obj
@@ -495,7 +495,33 @@ set_property "used_in_implementation" "1" $file_obj
 set_property "used_in_simulation" "1" $file_obj
 set_property "used_in_synthesis" "1" $file_obj
 
-set file "$origin_dir/../../../scr1/src/core/scr1_dbgc.sv"
+set file "$origin_dir/../../../scr1/src/core/scr1_dm.sv"
+set file [file normalize $file]
+set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
+set_property "file_type" "SystemVerilog" $file_obj
+set_property "is_enabled" "1" $file_obj
+set_property "is_global_include" "0" $file_obj
+set_property "library" "xil_defaultlib" $file_obj
+set_property "path_mode" "RelativeFirst" $file_obj
+set_property "used_in" "synthesis implementation simulation" $file_obj
+set_property "used_in_implementation" "1" $file_obj
+set_property "used_in_simulation" "1" $file_obj
+set_property "used_in_synthesis" "1" $file_obj
+
+set file "$origin_dir/../../../scr1/src/core/scr1_dmi.sv"
+set file [file normalize $file]
+set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
+set_property "file_type" "SystemVerilog" $file_obj
+set_property "is_enabled" "1" $file_obj
+set_property "is_global_include" "0" $file_obj
+set_property "library" "xil_defaultlib" $file_obj
+set_property "path_mode" "RelativeFirst" $file_obj
+set_property "used_in" "synthesis implementation simulation" $file_obj
+set_property "used_in_implementation" "1" $file_obj
+set_property "used_in_simulation" "1" $file_obj
+set_property "used_in_synthesis" "1" $file_obj
+
+set file "$origin_dir/../../../scr1/src/core/scr1_scu.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
 set_property "file_type" "SystemVerilog" $file_obj
@@ -522,19 +548,6 @@ set_property "used_in_simulation" "1" $file_obj
 set_property "used_in_synthesis" "1" $file_obj
 
 set file "$origin_dir/../../../scr1/src/core/scr1_tapc_shift_reg.sv"
-set file [file normalize $file]
-set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "SystemVerilog" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis implementation simulation" $file_obj
-set_property "used_in_implementation" "1" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
-
-set file "$origin_dir/../../../scr1/src/core/scr1_tapc_data_reg.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
 set_property "file_type" "SystemVerilog" $file_obj

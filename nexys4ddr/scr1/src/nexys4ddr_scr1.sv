@@ -3,8 +3,9 @@
 /// @brief      Top-level entity with SCR1 for Digilent Nexys 4 DDR board
 ///
 
+`include "scr1_arch_description.svh"
 
-parameter bit [31:0] FPGA_BUILD_ID = 32'h19012101;
+parameter bit [31:0] FPGA_BUILD_ID = `SCR1_ARCH_BUILD_ID;
 
 
 module nexys4ddr_scr1_top (
@@ -123,13 +124,22 @@ assign scr1_irq = {31'd0, riscv0_irq};
 scr1_top_axi
 i_scr1 (
     // Common
+    .pwrup_rst_n                (1'b1),
     .rst_n                      (rstn_riscv),
-    .rst_n_out                  (),
-    .test_mode                  (1'd0),
+    .cpu_rst_n                  (1'b1),
+    .test_mode                  (1'b0),
+    .test_rst_n                 (1'b1),
     .clk                        (clk_riscv),
     .rtc_clk                    (1'b0),
+`ifdef SCR1_DBGC_EN
+    .ndm_rst_n_out              (),
+`endif // SCR1_DBGC_EN
+
     // Fuses
     .fuse_mhartid               ('0),
+`ifdef SCR1_DBGC_EN
+    .fuse_idcode                (`SCR1_TAP_IDCODE),
+`endif // SCR1_DBGC_EN
 
     // IRQ
 `ifdef SCR1_IPIC_EN
