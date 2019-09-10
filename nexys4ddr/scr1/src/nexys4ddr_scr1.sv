@@ -3,6 +3,8 @@
 /// @brief      Top-level entity with SCR1 for Digilent Nexys 4 DDR board
 ///
 
+`include "scr1_arch_types.svh"
+`include "scr1_arch_custom.svh"
 `include "scr1_arch_description.svh"
 
 parameter bit [31:0] FPGA_BUILD_ID = `SCR1_ARCH_BUILD_ID;
