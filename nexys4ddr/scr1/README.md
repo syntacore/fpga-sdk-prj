@@ -7,12 +7,13 @@
 ## Folder contents
 Folder | Description
 ------ | -----------
-bd                    | Block design files
 constrs               | Constraint files
 src                   | Project's RTL source files
+mem_update.tcl        | TCL-file for onchip SRAM memory initialization
 nexys4ddr_scr1.tcl    | TCL-file for project creation
 README.md             | This file
-scbl.mem              | The onchip SRAM memory content file  with the SCR1 Bootloader.
+scbl.mem              | The onchip SRAM memory content file with the SCR1 Bootloader
+write_mmi.tcl         | TCL-file with procedures for mem_update.tcl
 
 Hereinafter this folder is named <PROJECT_HOME_DIR> (the folder containing this README file).
 
@@ -54,15 +55,17 @@ After successful completion, the folder
 should contain updated bit-file nexys4ddr_scr1_top_new.bit and MCS-file nexys4ddr_scr1_top_new.mcs for configuration FLASH chip programming.
 
 ## SCR1 Memory Map
-Base Address | Length | Name | Description
------------- | ------ | ---- | -----------
-0x00000000   | 128 MB | SDRAM | Onboard DDR2 SDRAM.
-0xF0000000   | 64  kB | TCM  | SCR1 Tightly-Coupled Memory (refer to SCR1 EAS).
-0xF0040000   | 32   B | Timer | SCR1 Timer registers (refer to SCR1 EAS).
-0xFF000000   |  | MMIO BASE  | Base address for Memory-Mapped Peripheral IO resources, resided externally to SCR1 core.
-0xFF000000   | 4   kB | BLD_ID | 32-bit Build ID register.
-0xFF010000   | 4   kB | UART | 16550 UART registers (refer to Xilinx IP description for details). Interrupt line is assigned to IRQ[0].
-0xFFFF0000   | 64  kB | SRAM | Onchip SRAM containing pre-programmed SCR Loader firmware. SCR1_RST_VECTOR and SCR1_CSR_MTVEC_BASE are both mapped here.
+Base Address | Length | Name          | Description
+------------ | ------ | ------------- | -----------
+0x00000000   | 128 MB | SDRAM         | Onboard DDR2 SDRAM.
+0xF0000000   | 64  kB | TCM           | SCR1 Tightly-Coupled Memory (refer to SCR1 EAS).
+0xF0040000   | 32   B | Timer         | SCR1 Timer registers (refer to SCR1 EAS).
+0xFF000000   |        | MMIO BASE     | Base address for Memory-Mapped Peripheral IO resources, resided externally to SCR1 processor cluster.
+0xFF000000   | 4   kB | SOC_ID        | 32-bit SOC_ID register.
+0xFF001000   | 4   kB | BLD_ID        | 32-bit BLD_ID register.
+0xFF002000   | 4   kB | CORE_CLK_FREQ | 32-bit Core Clock Frequency register.
+0xFF010000   | 4   kB | UART          | 16550 UART registers (refer to Xilinx IP description for details). Interrupt line is assigned to IRQ[0].
+0xFFFF0000   | 64  kB | SRAM          | Onchip SRAM containing pre-programmed SCR Loader firmware. SCR1_RST_VECTOR and SCR1_CSR_MTVEC_BASE are both mapped here.
 
 ## SCR1 JTAG Pin-Out
 

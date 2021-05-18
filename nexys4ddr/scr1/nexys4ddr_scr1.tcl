@@ -64,7 +64,7 @@ if { $::argc > 0 } {
 }
 
 # Set the directory path for the original project from where this script was exported
-set orig_proj_dir "[file normalize "$origin_dir/project"]"
+set orig_proj_dir "[file normalize "$origin_dir/nexys4ddr_scr1"]"
 
 # Create project
 create_project ${_xil_proj_name_} ./${_xil_proj_name_} -part xc7a100tcsg324-1
@@ -106,22 +106,21 @@ set files [list \
  "[file normalize "$origin_dir/../../../scr1/src/includes/scr1_search_ms1.svh"]"\
  "[file normalize "$origin_dir/../../../scr1/src/includes/scr1_ipic.svh"]"\
  "[file normalize "$origin_dir/../../../scr1/src/includes/scr1_memif.svh"]"\
- "[file normalize "$origin_dir/../../../scr1/src/includes/scr1_ahb.svh"]"\
  "[file normalize "$origin_dir/../../../scr1/src/includes/scr1_tdu.svh"]"\
  "[file normalize "$origin_dir/../../../scr1/src/includes/scr1_hdu.svh"]"\
  "[file normalize "$origin_dir/../../../scr1/src/includes/scr1_tapc.svh"]"\
  "[file normalize "$origin_dir/../../../scr1/src/includes/scr1_dm.svh"]"\
- "[file normalize "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_mprf.sv"]"\
- "[file normalize "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_lsu.sv"]"\
- "[file normalize "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_ifu.sv"]"\
- "[file normalize "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_idu.sv"]"\
- "[file normalize "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_ialu.sv"]"\
- "[file normalize "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_exu.sv"]"\
- "[file normalize "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_hdu.sv"]"\
- "[file normalize "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_csr.sv"]"\
- "[file normalize "$origin_dir/../../../scr1/src/pipeline/scr1_ipic.sv"]"\
-  "[file normalize "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_tdu.sv"]"\
- "[file normalize "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_top.sv"]"\
+ "[file normalize "$origin_dir/../../../scr1/src/core/pipeline/scr1_pipe_mprf.sv"]"\
+ "[file normalize "$origin_dir/../../../scr1/src/core/pipeline/scr1_pipe_lsu.sv"]"\
+ "[file normalize "$origin_dir/../../../scr1/src/core/pipeline/scr1_pipe_ifu.sv"]"\
+ "[file normalize "$origin_dir/../../../scr1/src/core/pipeline/scr1_pipe_idu.sv"]"\
+ "[file normalize "$origin_dir/../../../scr1/src/core/pipeline/scr1_pipe_ialu.sv"]"\
+ "[file normalize "$origin_dir/../../../scr1/src/core/pipeline/scr1_pipe_exu.sv"]"\
+ "[file normalize "$origin_dir/../../../scr1/src/core/pipeline/scr1_pipe_hdu.sv"]"\
+ "[file normalize "$origin_dir/../../../scr1/src/core/pipeline/scr1_pipe_csr.sv"]"\
+ "[file normalize "$origin_dir/../../../scr1/src/core/pipeline/scr1_ipic.sv"]"\
+  "[file normalize "$origin_dir/../../../scr1/src/core/pipeline/scr1_pipe_tdu.sv"]"\
+ "[file normalize "$origin_dir/../../../scr1/src/core/pipeline/scr1_pipe_top.sv"]"\
  "[file normalize "$origin_dir/../../../scr1/src/core/primitives/scr1_reset_cells.sv"]"\
  "[file normalize "$origin_dir/../../../scr1/src/core/scr1_dm.sv"]"\
  "[file normalize "$origin_dir/../../../scr1/src/core/scr1_dmi.sv"]"\
@@ -145,493 +144,199 @@ add_files -norecurse -fileset $obj $files
 set file "$origin_dir/../../../scr1/src/includes/scr1_arch_description.svh"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "Verilog Header" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis simulation" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "Verilog Header" -objects $file_obj
 
 set file "$origin_dir/src/scr1_arch_custom.svh"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "Verilog Header" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis simulation" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "Verilog Header" -objects $file_obj
 
 set file "$origin_dir/../../../scr1/src/includes/scr1_arch_types.svh"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "Verilog Header" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis simulation" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "Verilog Header" -objects $file_obj
 
 set file "$origin_dir/../../../scr1/src/includes/scr1_riscv_isa_decoding.svh"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "Verilog Header" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis simulation" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "Verilog Header" -objects $file_obj
 
 set file "$origin_dir/../../../scr1/src/includes/scr1_search_ms1.svh"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "Verilog Header" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis simulation" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "Verilog Header" -objects $file_obj
 
 set file "$origin_dir/../../../scr1/src/includes/scr1_ipic.svh"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "Verilog Header" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis simulation" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "Verilog Header" -objects $file_obj
 
 set file "$origin_dir/../../../scr1/src/includes/scr1_memif.svh"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "Verilog Header" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis simulation" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "Verilog Header" -objects $file_obj
 
 set file "$origin_dir/../../../scr1/src/includes/scr1_tdu.svh"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "Verilog Header" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis simulation" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "Verilog Header" -objects $file_obj
 
 set file "$origin_dir/../../../scr1/src/includes/scr1_hdu.svh"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "Verilog Header" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis simulation" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "Verilog Header" -objects $file_obj
 
 set file "$origin_dir/../../../scr1/src/includes/scr1_tapc.svh"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "Verilog Header" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis simulation" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "Verilog Header" -objects $file_obj
 
 set file "$origin_dir/../../../scr1/src/includes/scr1_dm.svh"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "Verilog Header" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis simulation" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "Verilog Header" -objects $file_obj
 
-set file "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_mprf.sv"
+set file "$origin_dir/../../../scr1/src/core/pipeline/scr1_pipe_mprf.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "SystemVerilog" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis implementation simulation" $file_obj
-set_property "used_in_implementation" "1" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
-set file "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_lsu.sv"
+set file "$origin_dir/../../../scr1/src/core/pipeline/scr1_pipe_lsu.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "SystemVerilog" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis implementation simulation" $file_obj
-set_property "used_in_implementation" "1" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
-set file "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_ifu.sv"
+set file "$origin_dir/../../../scr1/src/core/pipeline/scr1_pipe_ifu.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "SystemVerilog" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis implementation simulation" $file_obj
-set_property "used_in_implementation" "1" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
-set file "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_idu.sv"
+set file "$origin_dir/../../../scr1/src/core/pipeline/scr1_pipe_idu.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "SystemVerilog" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis implementation simulation" $file_obj
-set_property "used_in_implementation" "1" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
-set file "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_ialu.sv"
+set file "$origin_dir/../../../scr1/src/core/pipeline/scr1_pipe_ialu.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "SystemVerilog" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis implementation simulation" $file_obj
-set_property "used_in_implementation" "1" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
-set file "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_exu.sv"
+set file "$origin_dir/../../../scr1/src/core/pipeline/scr1_pipe_exu.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "SystemVerilog" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis implementation simulation" $file_obj
-set_property "used_in_implementation" "1" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
-set file "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_hdu.sv"
+set file "$origin_dir/../../../scr1/src/core/pipeline/scr1_pipe_hdu.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "SystemVerilog" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis implementation simulation" $file_obj
-set_property "used_in_implementation" "1" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
-set file "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_csr.sv"
+set file "$origin_dir/../../../scr1/src/core/pipeline/scr1_pipe_csr.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "SystemVerilog" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis implementation simulation" $file_obj
-set_property "used_in_implementation" "1" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
-set file "$origin_dir/../../../scr1/src/pipeline/scr1_ipic.sv"
+set file "$origin_dir/../../../scr1/src/core/pipeline/scr1_ipic.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "SystemVerilog" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis implementation simulation" $file_obj
-set_property "used_in_implementation" "1" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
-set file "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_tdu.sv"
+set file "$origin_dir/../../../scr1/src/core/pipeline/scr1_pipe_tdu.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "SystemVerilog" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis implementation simulation" $file_obj
-set_property "used_in_implementation" "1" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
-set file "$origin_dir/../../../scr1/src/pipeline/scr1_pipe_top.sv"
+set file "$origin_dir/../../../scr1/src/core/pipeline/scr1_pipe_top.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "SystemVerilog" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis implementation simulation" $file_obj
-set_property "used_in_implementation" "1" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
 set file "$origin_dir/../../../scr1/src/core/primitives/scr1_reset_cells.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "SystemVerilog" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis implementation simulation" $file_obj
-set_property "used_in_implementation" "1" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
 set file "$origin_dir/../../../scr1/src/core/scr1_dm.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "SystemVerilog" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis implementation simulation" $file_obj
-set_property "used_in_implementation" "1" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
 set file "$origin_dir/../../../scr1/src/core/scr1_dmi.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "SystemVerilog" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis implementation simulation" $file_obj
-set_property "used_in_implementation" "1" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
 set file "$origin_dir/../../../scr1/src/core/scr1_scu.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "SystemVerilog" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis implementation simulation" $file_obj
-set_property "used_in_implementation" "1" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
 set file "$origin_dir/../../../scr1/src/core/scr1_tapc_synchronizer.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "SystemVerilog" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis implementation simulation" $file_obj
-set_property "used_in_implementation" "1" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
 set file "$origin_dir/../../../scr1/src/core/scr1_tapc_shift_reg.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "SystemVerilog" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis implementation simulation" $file_obj
-set_property "used_in_implementation" "1" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
 set file "$origin_dir/../../../scr1/src/core/scr1_tapc.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "SystemVerilog" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis implementation simulation" $file_obj
-set_property "used_in_implementation" "1" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
 set file "$origin_dir/../../../scr1/src/core/scr1_core_top.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "SystemVerilog" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis implementation simulation" $file_obj
-set_property "used_in_implementation" "1" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
 set file "$origin_dir/../../../scr1/src/top/scr1_dp_memory.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "SystemVerilog" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis implementation simulation" $file_obj
-set_property "used_in_implementation" "1" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
 set file "$origin_dir/../../../scr1/src/top/scr1_tcm.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "SystemVerilog" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis implementation simulation" $file_obj
-set_property "used_in_implementation" "1" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
 set file "$origin_dir/../../../scr1/src/top/scr1_imem_router.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "SystemVerilog" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis implementation simulation" $file_obj
-set_property "used_in_implementation" "1" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
 set file "$origin_dir/../../../scr1/src/top/scr1_dmem_router.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "SystemVerilog" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis implementation simulation" $file_obj
-set_property "used_in_implementation" "1" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
 set file "$origin_dir/../../../scr1/src/top/scr1_mem_axi.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "SystemVerilog" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis implementation simulation" $file_obj
-set_property "used_in_implementation" "1" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
 set file "$origin_dir/../../../scr1/src/top/scr1_timer.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "SystemVerilog" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis implementation simulation" $file_obj
-set_property "used_in_implementation" "1" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
 set file "$origin_dir/../../../scr1/src/top/scr1_top_axi.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "SystemVerilog" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis implementation simulation" $file_obj
-set_property "used_in_implementation" "1" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
 set file "$origin_dir/src/nexys4ddr_scr1.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property "file_type" "SystemVerilog" $file_obj
-set_property "is_enabled" "1" $file_obj
-set_property "is_global_include" "0" $file_obj
-set_property "library" "xil_defaultlib" $file_obj
-set_property "path_mode" "RelativeFirst" $file_obj
-set_property "used_in" "synthesis implementation simulation" $file_obj
-set_property "used_in_implementation" "1" $file_obj
-set_property "used_in_simulation" "1" $file_obj
-set_property "used_in_synthesis" "1" $file_obj
-
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
 # Set 'sources_1' fileset file properties for local files
 # None
 
 # Set 'sources_1' fileset properties
 set obj [get_filesets sources_1]
-set_property -name "top" -value "nexys4ddr_scr1_top" -objects $obj
+set_property -name "top" -value "nexys4ddr_scr1" -objects $obj
 set_property -name "verilog_define" -value "SCR1_ARCH_CUSTOM=1" -objects $obj
 
 # Create 'constrs_1' fileset (if not found)
@@ -643,16 +348,51 @@ if {[string equal [get_filesets -quiet constrs_1] ""]} {
 set obj [get_filesets constrs_1]
 
 # Add/Import constrs file and set constrs file properties
-set file "[file normalize "$origin_dir/constrs/nexys4ddr_scr1.xdc"]"
+set file "[file normalize "$origin_dir/constrs/nexys4ddr_scr1_synth.xdc"]"
 set file_added [add_files -norecurse -fileset $obj [list $file]]
-set file "$origin_dir/constrs/nexys4ddr_scr1.xdc"
+set file "$origin_dir/constrs/nexys4ddr_scr1_synth.xdc"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets constrs_1] [list "*$file"]]
 set_property -name "file_type" -value "XDC" -objects $file_obj
 
 # Set 'constrs_1' fileset properties
 set obj [get_filesets constrs_1]
+set_property -name "target_constrs_file" -value "[file normalize "$origin_dir/constrs/nexys4ddr_scr1_synth.xdc"]" -objects $obj
 
+# Create 'constrs_2' fileset (if not found)
+if {[string equal [get_filesets -quiet constrs_2] ""]} {
+  create_fileset -constrset constrs_2
+}
+
+# Set 'constrs_2' fileset object
+set obj [get_filesets constrs_2]
+
+# Add/Import constrs file and set constrs file properties
+set file "[file normalize "$origin_dir/constrs/nexys4ddr_scr1_synth.xdc"]"
+set file_added [add_files -norecurse -fileset $obj [list $file]]
+set file "$origin_dir/constrs/nexys4ddr_scr1_synth.xdc"
+set file [file normalize $file]
+set file_obj [get_files -of_objects [get_filesets constrs_2] [list "*$file"]]
+set_property -name "file_type" -value "XDC" -objects $file_obj
+
+# Add/Import constrs file and set constrs file properties
+set file "[file normalize "$origin_dir/constrs/nexys4ddr_scr1_physical.xdc"]"
+set file_added [add_files -norecurse -fileset $obj [list $file]]
+set file "$origin_dir/constrs/nexys4ddr_scr1_physical.xdc"
+set file [file normalize $file]
+set file_obj [get_files -of_objects [get_filesets constrs_2] [list "*$file"]]
+set_property -name "file_type" -value "XDC" -objects $file_obj
+
+# Add/Import constrs file and set constrs file properties
+set file "[file normalize "$origin_dir/constrs/nexys4ddr_scr1_timing.xdc"]"
+set file_added [add_files -norecurse -fileset $obj [list $file]]
+set file "$origin_dir/constrs/nexys4ddr_scr1_timing.xdc"
+set file [file normalize $file]
+set file_obj [get_files -of_objects [get_filesets constrs_2] [list "*$file"]]
+set_property -name "file_type" -value "XDC" -objects $file_obj
+
+# Set 'constrs_2' fileset properties
+#set obj [get_filesets constrs_2]
 
 # Create 'sim_1' fileset (if not found)
 if {[string equal [get_filesets -quiet sim_1] ""]} {
@@ -665,16 +405,18 @@ set obj [get_filesets sim_1]
 
 # Set 'sim_1' fileset properties
 set obj [get_filesets sim_1]
+set_property -name "top" -value "nexys4ddr_scr1" -objects $obj
+set_property -name "verilog_define" -value "SCR1_ARCH_CUSTOM=1" -objects $obj
 
 
 # Adding sources referenced in BDs, if not already added
 
 
-# Proc to create BD soc
-proc cr_bd_soc { parentCell } {
+# Proc to create BD nexys4ddr_sopc
+proc cr_bd_nexys4ddr_sopc { parentCell } {
 
   # CHANGE DESIGN NAME HERE
-  set design_name soc
+  set design_name nexys4ddr_sopc
 
   common::send_msg_id "BD_TCL-003" "INFO" "Currently there is no design <$design_name> in project, so creating one..."
 
@@ -686,17 +428,35 @@ proc cr_bd_soc { parentCell } {
   ##################################################################
   set bCheckIPs 1
   if { $bCheckIPs == 1 } {
-     set list_check_ips "\ 
-  xilinx.com:ip:axi_gpio:2.0\
-  xilinx.com:ip:blk_mem_gen:8.4\
-  xilinx.com:ip:axi_bram_ctrl:4.0\
-  xilinx.com:ip:clk_wiz:6.0\
-  xilinx.com:ip:axi_clock_converter:2.1\
-  xilinx.com:ip:proc_sys_reset:5.0\
-  xilinx.com:ip:mig_7series:4.1\
-  xilinx.com:ip:smartconnect:1.0\
-  xilinx.com:ip:axi_uart16550:2.0\
-  "
+    if {[expr [string range [version -short] 0 5] > "2018.2"]} {
+      set list_check_ips "\ 
+      xilinx.com:ip:axi_gpio:2.0\
+      xilinx.com:ip:blk_mem_gen:8.4\
+      xilinx.com:ip:axi_bram_ctrl:4.1\
+      xilinx.com:ip:clk_wiz:6.0\
+      xilinx.com:ip:axi_clock_converter:2.1\
+      xilinx.com:ip:mig_7series:4.2\
+      xilinx.com:ip:proc_sys_reset:5.0\
+      xilinx.com:ip:smartconnect:1.0\
+      xilinx.com:ip:axi_uart16550:2.0\
+      xilinx.com:ip:util_vector_logic:2.0\
+      xilinx.com:ip:xlconstant:1.1\
+      "
+    } else {
+      set list_check_ips "\ 
+      xilinx.com:ip:axi_gpio:2.0\
+      xilinx.com:ip:blk_mem_gen:8.4\
+      xilinx.com:ip:axi_bram_ctrl:4.0\
+      xilinx.com:ip:clk_wiz:6.0\
+      xilinx.com:ip:axi_clock_converter:2.1\
+      xilinx.com:ip:mig_7series:4.1\
+      xilinx.com:ip:proc_sys_reset:5.0\
+      xilinx.com:ip:smartconnect:1.0\
+      xilinx.com:ip:axi_uart16550:2.0\
+      xilinx.com:ip:util_vector_logic:2.0\
+      xilinx.com:ip:xlconstant:1.1\
+      "
+    }
 
    set list_ips_missing ""
    common::send_msg_id "BD_TCL-006" "INFO" "Checking if the following IPs exist in the project's IP catalog: $list_check_ips ."
@@ -809,26 +569,29 @@ proc cr_bd_soc { parentCell } {
    CONFIG.WUSER_WIDTH {0} \
    ] $axi_imem
   set bld_id [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:gpio_rtl:1.0 bld_id ]
-  set ddr2_sdram [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:ddrx_rtl:1.0 ddr2_sdram ]
+  set core_clk_freq [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:gpio_rtl:1.0 core_clk_freq ]
+  set ddr2 [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:ddrx_rtl:1.0 ddr2 ]
+  set soc_id [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:gpio_rtl:1.0 soc_id ]
   set uart [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:uart_rtl:1.0 uart ]
 
   # Create ports
-  set clk_riscv [ create_bd_port -dir O -type clk clk_riscv ]
+  set cpu_clk_o [ create_bd_port -dir O -type clk cpu_clk_o ]
   set_property -dict [ list \
    CONFIG.ASSOCIATED_BUSIF {axi_imem:axi_dmem} \
    CONFIG.ASSOCIATED_RESET {rstn} \
- ] $clk_riscv
-  set ddr_calib [ create_bd_port -dir O ddr_calib ]
-  set reset [ create_bd_port -dir I -type rst reset ]
-  set_property -dict [ list \
-   CONFIG.POLARITY {ACTIVE_LOW} \
- ] $reset
-  set rstn_riscv [ create_bd_port -dir O -from 0 -to 0 rstn_riscv ]
-  set sys_clock [ create_bd_port -dir I -type clk sys_clock ]
+ ] $cpu_clk_o
+  set cpu_reset_o [ create_bd_port -dir O -type rst cpu_reset_o ]
+  set ddr2_init_complete [ create_bd_port -dir O ddr2_init_complete ]
+  set osc_clk [ create_bd_port -dir I -type clk osc_clk ]
   set_property -dict [ list \
    CONFIG.FREQ_HZ {100000000} \
    CONFIG.PHASE {0.000} \
- ] $sys_clock
+ ] $osc_clk
+  set pwrup_rst_n_o [ create_bd_port -dir O -type rst pwrup_rst_n_o ]
+  set soc_rst_n [ create_bd_port -dir I -type rst soc_rst_n ]
+  set_property -dict [ list \
+   CONFIG.POLARITY {ACTIVE_LOW} \
+ ] $soc_rst_n
   set uart_irq [ create_bd_port -dir O -type intr uart_irq ]
 
   # Create instance: bld_id, and set properties
@@ -851,7 +614,11 @@ proc cr_bd_soc { parentCell } {
  ] $blk_mem_gen_0
 
   # Create instance: bram_ctrl, and set properties
+if {[expr [string range [version -short] 0 5] > "2018.2"]} {
+  set bram_ctrl [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_bram_ctrl:4.1 bram_ctrl ]
+} else {
   set bram_ctrl [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_bram_ctrl:4.0 bram_ctrl ]
+}
   set_property -dict [ list \
    CONFIG.C_SELECT_XPM {0} \
    CONFIG.SINGLE_PORT_BRAM {0} \
@@ -867,7 +634,7 @@ proc cr_bd_soc { parentCell } {
    CONFIG.CLKOUT2_PHASE_ERROR {132.063} \
    CONFIG.CLKOUT2_REQUESTED_OUT_FREQ {200.000} \
    CONFIG.CLKOUT2_USED {true} \
-   CONFIG.CLK_IN1_BOARD_INTERFACE {sys_clock} \
+   CONFIG.CLK_IN1_BOARD_INTERFACE {Custom} \
    CONFIG.MMCM_CLKFBOUT_MULT_F {6.000} \
    CONFIG.MMCM_CLKIN1_PERIOD {10.0} \
    CONFIG.MMCM_CLKIN2_PERIOD {10.0} \
@@ -875,7 +642,7 @@ proc cr_bd_soc { parentCell } {
    CONFIG.MMCM_CLKOUT1_DIVIDE {3} \
    CONFIG.MMCM_DIVCLK_DIVIDE {1} \
    CONFIG.NUM_OUT_CLKS {2} \
-   CONFIG.RESET_BOARD_INTERFACE {reset} \
+   CONFIG.RESET_BOARD_INTERFACE {Custom} \
    CONFIG.RESET_PORT {resetn} \
    CONFIG.RESET_TYPE {ACTIVE_LOW} \
    CONFIG.USE_BOARD_FLOW {true} \
@@ -883,21 +650,25 @@ proc cr_bd_soc { parentCell } {
    CONFIG.USE_RESET {true} \
  ] $clk_wiz_0
 
-  # Create instance: ddr_clock_converter_0, and set properties
-  set ddr_clock_converter_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_clock_converter:2.1 ddr_clock_converter_0 ]
-
-  # Create instance: ddr_rstn, and set properties
-  set ddr_rstn [ create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset:5.0 ddr_rstn ]
+  # Create instance: core_clk_freq, and set properties
+  set core_clk_freq [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio:2.0 core_clk_freq ]
   set_property -dict [ list \
-   CONFIG.RESET_BOARD_INTERFACE {reset} \
-   CONFIG.USE_BOARD_FLOW {true} \
- ] $ddr_rstn
+   CONFIG.C_ALL_INPUTS {1} \
+ ] $core_clk_freq
 
-  # Create instance: mig_7series_0, and set properties
-  set mig_7series_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:mig_7series:4.1 mig_7series_0 ]
+  # Create instance: ddr2_sdram, and set properties
+  if {[expr [string range [version -short] 0 5] > "2018.2"]} {
+    set ddr2_sdram [ create_bd_cell -type ip -vlnv xilinx.com:ip:mig_7series:4.2 ddr2_sdram ]
+  } else {
+    set ddr2_sdram [ create_bd_cell -type ip -vlnv xilinx.com:ip:mig_7series:4.1 ddr2_sdram ]
+  }
+
   set_property -dict [ list \
    CONFIG.BOARD_MIG_PARAM {ddr2_sdram} \
- ] $mig_7series_0
+ ] $ddr2_sdram
+
+  # Create instance: ddr_clock_converter_0, and set properties
+  set ddr_clock_converter_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_clock_converter:2.1 ddr_clock_converter_0 ]
 
   # Create instance: riscv_rstn, and set properties
   set riscv_rstn [ create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset:5.0 riscv_rstn ]
@@ -911,55 +682,88 @@ proc cr_bd_soc { parentCell } {
   set_property -dict [ list \
    CONFIG.HAS_ARESETN {1} \
    CONFIG.NUM_CLKS {1} \
-   CONFIG.NUM_MI {4} \
+   CONFIG.NUM_MI {6} \
    CONFIG.NUM_SI {2} \
  ] $smartconnect_0
+
+  # Create instance: soc_id, and set properties
+  set soc_id [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio:2.0 soc_id ]
+  set_property -dict [ list \
+   CONFIG.C_ALL_INPUTS {1} \
+ ] $soc_id
 
   # Create instance: uart, and set properties
   set uart [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_uart16550:2.0 uart ]
   set_property -dict [ list \
    CONFIG.C_S_AXI_ACLK_FREQ_HZ {30000000} \
-   CONFIG.UART_BOARD_INTERFACE {usb_uart} \
+   CONFIG.UART_BOARD_INTERFACE {Custom} \
    CONFIG.USE_BOARD_FLOW {true} \
  ] $uart
 
+  # Create instance: util_vector_logic_0, and set properties
+  set util_vector_logic_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:util_vector_logic:2.0 util_vector_logic_0 ]
+  set_property -dict [ list \
+   CONFIG.C_OPERATION {not} \
+   CONFIG.C_SIZE {1} \
+   CONFIG.LOGO_FILE {data/sym_notgate.png} \
+ ] $util_vector_logic_0
+
+  # Create instance: xlconstant_log_1, and set properties
+  set xlconstant_log_1 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_log_1 ]
+
   # Create interface connections
   connect_bd_intf_net -intf_net axi [get_bd_intf_ports axi_imem] [get_bd_intf_pins smartconnect_0/S00_AXI]
-  connect_bd_intf_net -intf_net axi_gpio_0_GPIO [get_bd_intf_ports bld_id] [get_bd_intf_pins bld_id/GPIO]
+  connect_bd_intf_net -intf_net axi_gpio_0_GPIO [get_bd_intf_ports soc_id] [get_bd_intf_pins soc_id/GPIO]
   connect_bd_intf_net -intf_net axi_nc_1 [get_bd_intf_ports axi_dmem] [get_bd_intf_pins smartconnect_0/S01_AXI]
+  connect_bd_intf_net -intf_net bld_id_GPIO [get_bd_intf_ports bld_id] [get_bd_intf_pins bld_id/GPIO]
   connect_bd_intf_net -intf_net bram_ctrl_BRAM_PORTA [get_bd_intf_pins blk_mem_gen_0/BRAM_PORTA] [get_bd_intf_pins bram_ctrl/BRAM_PORTA]
   connect_bd_intf_net -intf_net bram_ctrl_BRAM_PORTB [get_bd_intf_pins blk_mem_gen_0/BRAM_PORTB] [get_bd_intf_pins bram_ctrl/BRAM_PORTB]
-  connect_bd_intf_net -intf_net ddr_clock_converter_0_M_AXI [get_bd_intf_pins ddr_clock_converter_0/M_AXI] [get_bd_intf_pins mig_7series_0/S_AXI]
-  connect_bd_intf_net -intf_net mig_7series_0_DDR2 [get_bd_intf_ports ddr2_sdram] [get_bd_intf_pins mig_7series_0/DDR2]
+  connect_bd_intf_net -intf_net core_clk_freq_GPIO [get_bd_intf_ports core_clk_freq] [get_bd_intf_pins core_clk_freq/GPIO]
+  connect_bd_intf_net -intf_net ddr_clock_converter_0_M_AXI [get_bd_intf_pins ddr2_sdram/S_AXI] [get_bd_intf_pins ddr_clock_converter_0/M_AXI]
+  connect_bd_intf_net -intf_net mig_7series_0_DDR2 [get_bd_intf_ports ddr2] [get_bd_intf_pins ddr2_sdram/DDR2]
   connect_bd_intf_net -intf_net smartconnect_0_M00_AXI [get_bd_intf_pins bram_ctrl/S_AXI] [get_bd_intf_pins smartconnect_0/M00_AXI]
   connect_bd_intf_net -intf_net smartconnect_0_M01_AXI [get_bd_intf_pins smartconnect_0/M01_AXI] [get_bd_intf_pins uart/S_AXI]
-  connect_bd_intf_net -intf_net smartconnect_0_M02_AXI [get_bd_intf_pins bld_id/S_AXI] [get_bd_intf_pins smartconnect_0/M02_AXI]
+  connect_bd_intf_net -intf_net smartconnect_0_M02_AXI [get_bd_intf_pins smartconnect_0/M02_AXI] [get_bd_intf_pins soc_id/S_AXI]
   connect_bd_intf_net -intf_net smartconnect_0_M03_AXI [get_bd_intf_pins ddr_clock_converter_0/S_AXI] [get_bd_intf_pins smartconnect_0/M03_AXI]
+  connect_bd_intf_net -intf_net smartconnect_0_M04_AXI [get_bd_intf_pins bld_id/S_AXI] [get_bd_intf_pins smartconnect_0/M04_AXI]
+  connect_bd_intf_net -intf_net smartconnect_0_M05_AXI [get_bd_intf_pins core_clk_freq/S_AXI] [get_bd_intf_pins smartconnect_0/M05_AXI]
   connect_bd_intf_net -intf_net uart_UART [get_bd_intf_ports uart] [get_bd_intf_pins uart/UART]
 
   # Create port connections
   connect_bd_net -net axi_uart16550_0_ip2intc_irpt [get_bd_ports uart_irq] [get_bd_pins uart/ip2intc_irpt]
-  connect_bd_net -net clk_RISCV [get_bd_ports clk_riscv] [get_bd_pins bld_id/s_axi_aclk] [get_bd_pins bram_ctrl/s_axi_aclk] [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins ddr_clock_converter_0/s_axi_aclk] [get_bd_pins riscv_rstn/slowest_sync_clk] [get_bd_pins smartconnect_0/aclk] [get_bd_pins uart/s_axi_aclk]
-  connect_bd_net -net clk_wiz_0_clk_out2 [get_bd_pins clk_wiz_0/clk_out2] [get_bd_pins mig_7series_0/sys_clk_i]
-  connect_bd_net -net clk_wiz_0_locked [get_bd_pins clk_wiz_0/locked] [get_bd_pins ddr_rstn/dcm_locked] [get_bd_pins riscv_rstn/dcm_locked]
-  connect_bd_net -net ddr_rstn_interconnect_aresetn [get_bd_pins ddr_clock_converter_0/m_axi_aresetn] [get_bd_pins ddr_rstn/interconnect_aresetn] [get_bd_pins mig_7series_0/aresetn]
-  connect_bd_net -net mig_7series_0_init_calib_complete [get_bd_ports ddr_calib] [get_bd_pins mig_7series_0/init_calib_complete]
-  connect_bd_net -net mig_7series_1_ui_clk [get_bd_pins ddr_clock_converter_0/m_axi_aclk] [get_bd_pins ddr_rstn/slowest_sync_clk] [get_bd_pins mig_7series_0/ui_clk]
-  connect_bd_net -net proc_sys_reset_0_interconnect_aresetn [get_bd_ports rstn_riscv] [get_bd_pins bld_id/s_axi_aresetn] [get_bd_pins bram_ctrl/s_axi_aresetn] [get_bd_pins ddr_clock_converter_0/s_axi_aresetn] [get_bd_pins riscv_rstn/interconnect_aresetn] [get_bd_pins smartconnect_0/aresetn] [get_bd_pins uart/s_axi_aresetn]
-  connect_bd_net -net reset [get_bd_ports reset] [get_bd_pins clk_wiz_0/resetn] [get_bd_pins ddr_rstn/ext_reset_in] [get_bd_pins mig_7series_0/sys_rst] [get_bd_pins riscv_rstn/ext_reset_in]
-  connect_bd_net -net sys_clock_1 [get_bd_ports sys_clock] [get_bd_pins clk_wiz_0/clk_in1]
+  connect_bd_net -net clk_RISCV [get_bd_ports cpu_clk_o] [get_bd_pins bld_id/s_axi_aclk] [get_bd_pins bram_ctrl/s_axi_aclk] [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins core_clk_freq/s_axi_aclk] [get_bd_pins ddr_clock_converter_0/s_axi_aclk] [get_bd_pins riscv_rstn/slowest_sync_clk] [get_bd_pins smartconnect_0/aclk] [get_bd_pins soc_id/s_axi_aclk] [get_bd_pins uart/s_axi_aclk]
+  connect_bd_net -net clk_wiz_0_clk_out2 [get_bd_pins clk_wiz_0/clk_out2] [get_bd_pins ddr2_sdram/sys_clk_i]
+  connect_bd_net -net clk_wiz_0_locked [get_bd_ports pwrup_rst_n_o] [get_bd_pins clk_wiz_0/locked] [get_bd_pins riscv_rstn/dcm_locked]
+  connect_bd_net -net ddr_rstn_interconnect_aresetn [get_bd_pins ddr2_sdram/aresetn] [get_bd_pins ddr_clock_converter_0/m_axi_aresetn] [get_bd_pins util_vector_logic_0/Res]
+  connect_bd_net -net mig_7series_0_init_calib_complete [get_bd_ports ddr2_init_complete] [get_bd_pins ddr2_sdram/init_calib_complete]
+  connect_bd_net -net mig_7series_0_ui_clk_sync_rst [get_bd_pins ddr2_sdram/ui_clk_sync_rst] [get_bd_pins riscv_rstn/mb_debug_sys_rst] [get_bd_pins util_vector_logic_0/Op1]
+  connect_bd_net -net mig_7series_1_ui_clk [get_bd_pins ddr2_sdram/ui_clk] [get_bd_pins ddr_clock_converter_0/m_axi_aclk]
+  connect_bd_net -net proc_sys_reset_0_interconnect_aresetn [get_bd_pins ddr_clock_converter_0/s_axi_aresetn] [get_bd_pins riscv_rstn/interconnect_aresetn] [get_bd_pins smartconnect_0/aresetn]
+  connect_bd_net -net reset [get_bd_ports soc_rst_n] [get_bd_pins ddr2_sdram/sys_rst] [get_bd_pins riscv_rstn/ext_reset_in]
+  connect_bd_net -net riscv_rstn_mb_reset [get_bd_ports cpu_reset_o] [get_bd_pins riscv_rstn/mb_reset]
+  connect_bd_net -net riscv_rstn_peripheral_aresetn [get_bd_pins bld_id/s_axi_aresetn] [get_bd_pins bram_ctrl/s_axi_aresetn] [get_bd_pins core_clk_freq/s_axi_aresetn] [get_bd_pins riscv_rstn/peripheral_aresetn] [get_bd_pins soc_id/s_axi_aresetn] [get_bd_pins uart/s_axi_aresetn]
+  connect_bd_net -net sys_clock_1 [get_bd_ports osc_clk] [get_bd_pins clk_wiz_0/clk_in1]
+  connect_bd_net -net xlconstant_log_1_dout [get_bd_pins clk_wiz_0/resetn] [get_bd_pins xlconstant_log_1/dout]
 
   # Create address segments
-  create_bd_addr_seg -range 0x00001000 -offset 0xFF000000 [get_bd_addr_spaces axi_dmem] [get_bd_addr_segs bld_id/S_AXI/Reg] SEG_axi_gpio_0_Reg
-  create_bd_addr_seg -range 0x00010000 -offset 0xFFFF0000 [get_bd_addr_spaces axi_imem] [get_bd_addr_segs bram_ctrl/S_AXI/Mem0] SEG_bram_ctrl_Mem0
+  create_bd_addr_seg -range 0x00001000 -offset 0xFF000000 [get_bd_addr_spaces axi_dmem] [get_bd_addr_segs soc_id/S_AXI/Reg] SEG_axi_gpio_0_Reg
+  create_bd_addr_seg -range 0x00001000 -offset 0xFF001000 [get_bd_addr_spaces axi_dmem] [get_bd_addr_segs bld_id/S_AXI/Reg] SEG_bld_id_Reg
   create_bd_addr_seg -range 0x00010000 -offset 0xFFFF0000 [get_bd_addr_spaces axi_dmem] [get_bd_addr_segs bram_ctrl/S_AXI/Mem0] SEG_bram_ctrl_Mem0
-  create_bd_addr_seg -range 0x08000000 -offset 0x00000000 [get_bd_addr_spaces axi_imem] [get_bd_addr_segs mig_7series_0/memmap/memaddr] SEG_mig_7series_0_memaddr
-  create_bd_addr_seg -range 0x08000000 -offset 0x00000000 [get_bd_addr_spaces axi_dmem] [get_bd_addr_segs mig_7series_0/memmap/memaddr] SEG_mig_7series_0_memaddr
+  create_bd_addr_seg -range 0x00010000 -offset 0xFFFF0000 [get_bd_addr_spaces axi_imem] [get_bd_addr_segs bram_ctrl/S_AXI/Mem0] SEG_bram_ctrl_Mem0
+  create_bd_addr_seg -range 0x00001000 -offset 0xFF002000 [get_bd_addr_spaces axi_dmem] [get_bd_addr_segs core_clk_freq/S_AXI/Reg] SEG_core_clk_freq_Reg
+  create_bd_addr_seg -range 0x08000000 -offset 0x00000000 [get_bd_addr_spaces axi_dmem] [get_bd_addr_segs ddr2_sdram/memmap/memaddr] SEG_mig_7series_0_memaddr
+  create_bd_addr_seg -range 0x08000000 -offset 0x00000000 [get_bd_addr_spaces axi_imem] [get_bd_addr_segs ddr2_sdram/memmap/memaddr] SEG_mig_7series_0_memaddr
   create_bd_addr_seg -range 0x00001000 -offset 0xFF010000 [get_bd_addr_spaces axi_dmem] [get_bd_addr_segs uart/S_AXI/Reg] SEG_uart_Reg
 
   # Exclude Address Segments
-  create_bd_addr_seg -range 0x00001000 -offset 0xFF000000 [get_bd_addr_spaces axi_imem] [get_bd_addr_segs bld_id/S_AXI/Reg] SEG_axi_gpio_0_Reg
+  create_bd_addr_seg -range 0x00001000 -offset 0xFF000000 [get_bd_addr_spaces axi_imem] [get_bd_addr_segs soc_id/S_AXI/Reg] SEG_axi_gpio_0_Reg
   exclude_bd_addr_seg [get_bd_addr_segs axi_imem/SEG_axi_gpio_0_Reg]
+
+  create_bd_addr_seg -range 0x00001000 -offset 0xFF001000 [get_bd_addr_spaces axi_imem] [get_bd_addr_segs bld_id/S_AXI/Reg] SEG_bld_id_Reg
+  exclude_bd_addr_seg [get_bd_addr_segs axi_imem/SEG_bld_id_Reg]
+
+  create_bd_addr_seg -range 0x00001000 -offset 0xFF002000 [get_bd_addr_spaces axi_imem] [get_bd_addr_segs core_clk_freq/S_AXI/Reg] SEG_core_clk_freq_Reg
+  exclude_bd_addr_seg [get_bd_addr_segs axi_imem/SEG_core_clk_freq_Reg]
 
   create_bd_addr_seg -range 0x00001000 -offset 0xFF010000 [get_bd_addr_spaces axi_imem] [get_bd_addr_segs uart/S_AXI/Reg] SEG_uart_Reg
   exclude_bd_addr_seg [get_bd_addr_segs axi_imem/SEG_uart_Reg]
@@ -970,21 +774,17 @@ proc cr_bd_soc { parentCell } {
   current_bd_instance $oldCurInst
 
   save_bd_design
-common::send_msg_id "BD_TCL-1000" "WARNING" "This Tcl script was generated from a block design that has not been validated. It is possible that design <$design_name> may result in errors during validation."
-
-  close_bd_design $design_name 
+  close_bd_design $design_name
 }
-# End of cr_bd_soc()
-cr_bd_soc ""
-set_property SYNTH_CHECKPOINT_MODE "Hierarchical" [get_files soc.bd ] 
-set_property USED_IN "synthesis implementation" [get_files soc.bd ] 
-set_property USED_IN_SIMULATION "0" [get_files soc.bd ] 
+# End of cr_bd_nexys4ddr_sopc()
+cr_bd_nexys4ddr_sopc ""
+set_property SYNTH_CHECKPOINT_MODE "Hierarchical" [get_files nexys4ddr_sopc.bd ] 
 
 # Create 'synth_1' run (if not found)
 if {[string equal [get_runs -quiet synth_1] ""]} {
-    create_run -name synth_1 -part xc7a100tcsg324-1 -flow {Vivado Synthesis 2018} -strategy "Vivado Synthesis Defaults" -report_strategy {No Reports} -constrset constrs_1
+    create_run -name synth_1 -part xc7a100tcsg324-1 -flow {Vivado Synthesis 2018} -strategy "Flow_PerfOptimized_high" -report_strategy {No Reports} -constrset constrs_1
 } else {
-  set_property strategy "Vivado Synthesis Defaults" [get_runs synth_1]
+  set_property strategy "Flow_PerfOptimized_high" [get_runs synth_1]
   set_property flow "Vivado Synthesis 2018" [get_runs synth_1]
 }
 set obj [get_runs synth_1]
@@ -1007,9 +807,9 @@ current_run -synthesis [get_runs synth_1]
 
 # Create 'impl_1' run (if not found)
 if {[string equal [get_runs -quiet impl_1] ""]} {
-    create_run -name impl_1 -part xc7a100tcsg324-1 -flow {Vivado Implementation 2018} -strategy "Vivado Implementation Defaults" -report_strategy {No Reports} -constrset constrs_1 -parent_run synth_1
+    create_run -name impl_1 -part xc7a100tcsg324-1 -flow {Vivado Implementation 2018} -strategy "Performance_ExtraTimingOpt" -report_strategy {No Reports} -constrset constrs_2 -parent_run synth_1
 } else {
-  set_property strategy "Vivado Implementation Defaults" [get_runs impl_1]
+  set_property strategy "Performance_ExtraTimingOpt" [get_runs impl_1]
   set_property flow "Vivado Implementation 2018" [get_runs impl_1]
 }
 set obj [get_runs impl_1]
@@ -1201,6 +1001,7 @@ if { $obj != "" } {
 
 }
 set obj [get_runs impl_1]
+set_property -name "constrset" -value "constrs_2" -objects $obj
 set_property -name "strategy" -value "Performance_ExtraTimingOpt" -objects $obj
 set_property -name "steps.place_design.args.directive" -value "ExtraTimingOpt" -objects $obj
 set_property -name "steps.phys_opt_design.is_enabled" -value "1" -objects $obj

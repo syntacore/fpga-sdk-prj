@@ -1,5 +1,5 @@
-/// Copyright by Syntacore LLC © 2016, 2017. See LICENSE for details
-/// @file       <a5_sdk.sv>
+/// Copyright by Syntacore LLC © 2016, 2017, 2021. See LICENSE for details
+/// @file       <a5_scr1.sv>
 /// @brief      SC_RISCV_SDK @Arria V Starter kit
 ///
 
@@ -8,48 +8,51 @@
 `include "scr1_memif.svh"
 `include "scr1_ipic.svh"
 
+parameter bit [31:0] FPGA_A5_SOC_ID         = `SCR1_PTFM_SOC_ID;
+parameter bit [31:0] FPGA_A5_BLD_ID         = `SCR1_PTFM_BLD_ID;
+parameter bit [31:0] FPGA_A5_CORE_CLK_FREQ  = `SCR1_PTFM_CORE_CLK_FREQ;
 
-
-parameter bit [31:0] FPGA_A5_BUILD_ID = `SCR1_ARCH_BUILD_ID;
-
-
-
-module a5_sdk (
-
-    input                   cpu_resetn,
-    input                   clkin_50,
-    input                   clkin_100,
-
-    //DDR3 x32 Devices Interface
-    output                  ddr3_ck_p,
-    output                  ddr3_ck_n,
-    inout           [31:0]  ddr3_dq,
-    inout            [3:0]  ddr3_dqs_p,
-    inout            [3:0]  ddr3_dqs_n,
-    output           [3:0]  ddr3_dm,
-    output          [12:0]  ddr3_a,
-    output           [2:0]  ddr3_ba,
-    output                  ddr3_casn,
-    output                  ddr3_rasn,
-    output                  ddr3_cke,
-    output                  ddr3_csn,
-    output                  ddr3_odt,
-    output                  ddr3_wen,
-    output                  ddr3_rstn,
-    input                   ddr3_oct_rzq,
-
-    input                   uart0_rxd,
-    output                  uart0_txd,
-
-    input                   jtag_trst_n,
-    input                   jtag_tck,
-    input                   jtag_tms,
-    input                   jtag_tdi,
-    inout                   jtag_tdo,
-    output           [1:0]  jtag_vcc,
-    output           [7:0]  jtag_gnd,
-
-    output           [3:0]  user_led
+module a5_scr1 (
+    // === CLOCK ===========================================
+    input  logic                    CLKIN_50_BOT,
+    input  logic                    CLKINTOP_100_P,
+    // === RESET ===========================================
+    // USER_PB[2] is used as manual reset for SCR1 (see below).
+    // === DDR3 SDRAM ======================================
+    output logic            DDR3_CK_N,
+    output logic            DDR3_CK_P,
+    output logic            DDR3_CKE,
+    output logic            DDR3_RESET_N,
+    output logic            DDR3_CS_N,
+    output logic            DDR3_WE_N,
+    output logic            DDR3_RAS_N,
+    output logic            DDR3_CAS_N,
+    output logic [2:0]      DDR3_BA,
+    output logic [12:0]     DDR3_ADDR,
+    output logic [3:0]      DDR3_DM,
+    inout  logic [31:0]     DDR3_DQ,
+    inout  logic [3:0]      DDR3_DQS_P,
+    inout  logic [3:0]      DDR3_DQS_N,
+    output logic            DDR3_ODT,
+    input  logic            DDR3_OCT_RZQ,
+    // === LEDs ============================================
+    output logic [3:0]      USER_LED,
+    // === Buttons =========================================
+    input  logic [2:0]      USER_PB,
+    // === JTAG ============================================
+    `ifdef SCR1_DBG_EN
+    input  logic            JTAG_SRST_N,
+    input  logic            JTAG_TRST_N,
+    input  logic            JTAG_TCK,
+    input  logic            JTAG_TMS,
+    input  logic            JTAG_TDI,
+    output logic            JTAG_TDO,
+    output logic [1:0]      JTAG_VCC,
+    output logic [7:0]      JTAG_GND,
+    `endif//SCR1_DBG_EN
+    // === UART ============================================
+    output logic            UART_TXD,    // <- UART
+    input  logic            UART_RXD     // -> UART
 );
 
 
@@ -57,16 +60,20 @@ module a5_sdk (
 //=======================================================
 //  Signals / Variables declarations
 //=======================================================
-logic                   pll_locked;
-logic                   clk_riscv;
 logic                   pwrup_rst_n;
-logic [ 3:0]            rst_in_ff;
-logic                   rst_n;
-logic                   wb_rst_n;
-logic                   ddr3_init_done;
-logic                   ddr3_cal_success;
-logic                   ddr3_cal_fail;
+logic                   cpu_clk;
+logic                   extn_rst_in_n;
+logic                   extn_rst_n;
+logic [1:0]             extn_rst_n_sync;
+logic                   hard_rst_n;
+logic [3:0]             hard_rst_n_count;
+logic                   soc_rst_n;
+logic                   cpu_rst_n;
+`ifdef SCR1_DBG_EN
+logic                   sys_rst_n;
+`endif // SCR1_DBG_EN
 
+// --- SCR1 ---------------------------------------------
 // AXI
 logic [ 3:0]            axi_imem_awid;
 logic [31:0]            axi_imem_awaddr;
@@ -127,83 +134,177 @@ logic                   axi_dmem_rvalid;
 logic                   axi_dmem_rready;
 logic [ 1:0]            axi_dmem_rresp;
 logic                   axi_dmem_rlast;
+`ifdef SCR1_IPIC_EN
+logic [31:0]            scr1_irq;
+`else
+logic                   scr1_irq;
+`endif // SCR1_IPIC_EN
 
-logic [31:0]            riscv_irq;
+// --- DDR3 SDRAM ---------------------------------------
+logic                   ddr3_init_done;
+logic                   ddr3_cal_success;
+logic                   ddr3_cal_fail;
 
+// --- JTAG ---------------------------------------------
+`ifdef SCR1_DBG_EN
+logic                   scr1_jtag_trst_n;
+logic                   scr1_jtag_tck;
+logic                   scr1_jtag_tms;
+logic                   scr1_jtag_tdi;
+logic                   scr1_jtag_tdo_en;
+logic                   scr1_jtag_tdo_int;
+`endif // SCR1_DBG_EN
 
+// --- UART ---------------------------------------------
+//logic                   uart_rxd;   // -> UART
+//logic                   uart_txd;   // <- UART
+logic                   uart_rts_n; // <- UART
+logic                   uart_dtr_n; // <- UART
+logic                   uart_irq;
 
-logic                   riscv_jtag_trst_n;
-logic                   riscv_jtag_tck;
-logic                   riscv_jtag_tms;
-logic                   riscv_jtag_tdi;
-logic                   riscv_jtag_tdo_en_cpu0;
-logic                   riscv_jtag_tdo_int_cpu0;
+logic [31:0]            uart_readdata;
+logic                   uart_readdatavalid;
+logic [31:0]            uart_writedata;
+logic  [4:0]            uart_address;
+logic                   uart_write;
+logic                   uart_read;
+logic                   uart_waitrequest;
 
+logic                   uart_wb_ack;
+logic  [7:0]            uart_wb_dat;
+logic                   uart_read_vd;
+// --- Heartbeat ----------------------------------------
+logic [31:0]            rtc_counter;
+logic                   tick_2Hz;
+logic                   heartbeat;
 
+//=======================================================
+//  Resets
+//=======================================================
+assign extn_rst_in_n    = USER_PB[2]
+`ifdef SCR1_DBG_EN
+                        & JTAG_SRST_N
+`endif // SCR1_DBG_EN
+;
 
-
-
-
-
-
-assign pwrup_rst_n   =  pll_locked;
-
-pll
-i_pll (
-    .rst        (1'b0           ),
-    .refclk     (clkin_50       ),
-    .outclk_0   (clk_riscv      ),
-    .locked     (pll_locked     )
-);
-
-always_ff @(posedge clk_riscv, negedge pwrup_rst_n)
+always_ff @(posedge cpu_clk, negedge pwrup_rst_n)
 begin
-    if (pwrup_rst_n == 1'b0) begin
-        rst_in_ff  <= '0;
-    end
-    else begin
-        rst_in_ff <= {rst_in_ff[2:0], cpu_resetn};
+    if (~pwrup_rst_n) begin
+        extn_rst_n_sync     <= '0;
+    end else begin
+        extn_rst_n_sync[0]  <= extn_rst_in_n;
+        extn_rst_n_sync[1]  <= extn_rst_n_sync[0];
     end
 end
-assign wb_rst_n = rst_in_ff[1];
-assign rst_n    = rst_in_ff[3];
+assign extn_rst_n = extn_rst_n_sync[1];
 
+always_ff @(posedge cpu_clk, negedge pwrup_rst_n)
+begin
+    if (~pwrup_rst_n) begin
+        hard_rst_n          <= 1'b0;
+        hard_rst_n_count    <= '0;
+    end else begin
+        if (hard_rst_n) begin
+            // hard_rst_n == 1 - de-asserted
+            hard_rst_n          <= extn_rst_n;
+            hard_rst_n_count    <= '0;
+        end else begin
+            // hard_rst_n == 0 - asserted
+            if (extn_rst_n) begin
+                if (hard_rst_n_count == '1) begin
+                    // If extn_rst_n = 1 at least 16 clocks,
+                    // de-assert hard_rst_n
+                    hard_rst_n          <= 1'b1;
+                end else begin
+                    hard_rst_n_count    <= hard_rst_n_count + 1'b1;
+                end
+            end else begin
+                // If extn_rst_n is asserted within 16-cycles window -> start
+                // counting from the beginning
+                hard_rst_n_count    <= '0;
+            end
+        end
+    end
+end
 
+`ifdef SCR1_DBG_EN
+assign soc_rst_n = sys_rst_n;
+`else
+assign soc_rst_n = hard_rst_n;
+`endif // SCR1_DBG_EN
 
-logic riscv0_irq;
-assign riscv_irq = {31'd0, riscv0_irq};
+//=======================================================
+//  Heartbeat
+//=======================================================
+always_ff @(posedge cpu_clk, negedge hard_rst_n)
+begin
+    if (~hard_rst_n) begin
+        rtc_counter     <= '0;
+        tick_2Hz        <= 1'b0;
+    end
+    else begin
+        if (rtc_counter == '0) begin
+            rtc_counter <= (FPGA_A5_CORE_CLK_FREQ/2);
+            tick_2Hz    <= 1'b1;
+        end
+        else begin
+            rtc_counter <= rtc_counter - 1'b1;
+            tick_2Hz    <= 1'b0;
+        end
+    end
+end
 
+always_ff @(posedge cpu_clk, negedge hard_rst_n)
+begin
+    if (~hard_rst_n) begin
+        heartbeat       <= 1'b0;
+    end
+    else begin
+        if (tick_2Hz) begin
+            heartbeat   <= ~heartbeat;
+        end
+    end
+end
 
-
-
-scr1_top_axi i_scr_top(
+//=======================================================
+//  SCR1 Core's Processor Cluster
+//=======================================================
+scr1_top_axi
+i_scr_top (
     // Common
     .pwrup_rst_n                        (pwrup_rst_n            ),
-    .rst_n                              (rst_n                  ),
-    .cpu_rst_n                          (1'b1                   ),
+    .rst_n                              (hard_rst_n             ),
+    .cpu_rst_n                          (cpu_rst_n              ),
     .test_mode                          (1'b0                   ),
     .test_rst_n                         (1'b1                   ),
-    .clk                                (clk_riscv              ),
+    .clk                                (cpu_clk                ),
     .rtc_clk                            (1'b0                   ),
-`ifdef SCR1_DBGC_EN
-    .ndm_rst_n_out                      (                       ),
-`endif // SCR1_DBGC_EN
+`ifdef SCR1_DBG_EN
+    .sys_rst_n_o                        (sys_rst_n              ),
+    .sys_rdc_qlfy_o                     (                       ),
+`endif // SCR1_DBG_EN
 
     // Fuses
     .fuse_mhartid                       ('0                     ),
-`ifdef SCR1_DBGC_EN
+`ifdef SCR1_DBG_EN
     .fuse_idcode                        (`SCR1_TAP_IDCODE       ),
-`endif // SCR1_DBGC_EN
+`endif // SCR1_DBG_EN
 
-    .irq_lines                          (riscv_irq              ),
+`ifdef SCR1_IPIC_EN
+    .irq_lines                          (scr1_irq               ),
+`else // SCR1_IPIC_EN
+    .ext_irq                            (scr1_irq               ),
+`endif // SCR1_IPIC_EN
     .soft_irq                           ('0                     ),
     // Debug Interface
-    .trst_n                             (riscv_jtag_trst_n      ),
-    .tck                                (riscv_jtag_tck         ),
-    .tms                                (riscv_jtag_tms         ),
-    .tdi                                (riscv_jtag_tdi         ),
-    .tdo                                (riscv_jtag_tdo_int_cpu0),
-    .tdo_en                             (riscv_jtag_tdo_en_cpu0 ),
+`ifdef SCR1_DBG_EN
+    .trst_n                             (scr1_jtag_trst_n       ),
+    .tck                                (scr1_jtag_tck          ),
+    .tms                                (scr1_jtag_tms          ),
+    .tdi                                (scr1_jtag_tdi          ),
+    .tdo                                (scr1_jtag_tdo_int      ),
+    .tdo_en                             (scr1_jtag_tdo_en       ),
+`endif // SCR1_DBG_EN
 
     //---------------------------------------------------------------
     // AXI IMEM Interface
@@ -301,96 +402,78 @@ scr1_top_axi i_scr_top(
     .io_axi_dmem_rready                (axi_dmem_rready)
 );
 
+assign scr1_irq = {31'd0, uart_irq};
 
-
-
-
-
-//
+//==========================================================
 // UART 16550 IP
-//
+//==========================================================
+always_ff @(posedge cpu_clk, negedge soc_rst_n)
+if (~soc_rst_n)             uart_read_vd <= '0;
+    else if (uart_wb_ack)   uart_read_vd <= '0;
+    else if (uart_read)     uart_read_vd <= '1;
 
-logic [31:0]    uart_readdata;
-logic           uart_readdatavalid;
-logic [31:0]    uart_writedata;
-logic  [4:0]    uart_address;
-logic           uart_write;
-logic           uart_read;
-logic           uart_waitrequest;
-
-logic           wb_ack;
-logic  [7:0]    wb_dat;
-logic           read_valid;
-
-
-
-always_ff @(posedge clk_riscv, negedge wb_rst_n)
-if (~wb_rst_n)              read_valid <= '0;
-    else if (wb_ack)        read_valid <= '0;
-    else if (uart_read)     read_valid <= '1;
-
-
-always_ff @(posedge clk_riscv) begin
-    uart_readdatavalid  <= wb_ack & read_valid;
-    uart_readdata       <= {24'd0,wb_dat};
+always_ff @(posedge cpu_clk) begin
+    uart_readdatavalid  <= uart_wb_ack & uart_read_vd;
+    uart_readdata       <= {24'd0,uart_wb_dat};
 end
 
-
-assign uart_waitrequest = ~wb_ack;
-
+assign uart_waitrequest = ~uart_wb_ack;
 
 uart_top i_uart(
-    .wb_clk_i       (clk_riscv              ),
+    .wb_clk_i       (cpu_clk                ),
     // Wishbone signals
-    .wb_rst_i       (~rst_n                 ),
+    .wb_rst_i       (~soc_rst_n             ),
     .wb_adr_i       (uart_address[4:2]      ),
     .wb_dat_i       (uart_writedata[7:0]    ),
-    .wb_dat_o       (wb_dat                 ),
+    .wb_dat_o       (uart_wb_dat            ),
     .wb_we_i        (uart_write             ),
-    .wb_stb_i       (read_valid|uart_write  ),
-    .wb_cyc_i       (read_valid|uart_write  ),
-    .wb_ack_o       (wb_ack                 ),
+    .wb_stb_i       (uart_read_vd|uart_write),
+    .wb_cyc_i       (uart_read_vd|uart_write),
+    .wb_ack_o       (uart_wb_ack            ),
     .wb_sel_i       (4'd1                   ),
-    .int_o          (riscv0_irq             ),
+    .int_o          (uart_irq               ),
 
-    .stx_pad_o      (uart0_txd              ),
-    .srx_pad_i      (uart0_rxd              ),
+    .stx_pad_o      (UART_TXD               ),
+    .srx_pad_i      (UART_RXD               ),
 
-    .rts_pad_o      (                       ),
-    .cts_pad_i      ('1                     ),
-    .dtr_pad_o      (                       ),
-    .dsr_pad_i      ('1                     ),
+    .rts_pad_o      (uart_rts_n             ),
+    .cts_pad_i      (uart_rts_n             ),
+    .dtr_pad_o      (uart_dtr_n             ),
+    .dsr_pad_i      (uart_dtr_n             ),
     .ri_pad_i       ('1                     ),
     .dcd_pad_i      ('1                     )
-    );
+);
 
-
-
-
-
-
+//=======================================================
+//  FPGA Platform's System-on-Programmable-Chip (SOPC)
+//=======================================================
 a5_sopc
-i_a5_sopc (
-    .clk_emi_clk                        (clkin_100          ),
-    .clk_clk                            (clk_riscv          ),
-    .clk_rst_reset_n                    (rst_n              ),
+i_soc (
+    .osc_100_clk                        (CLKINTOP_100_P     ),
+    .osc_50_clk                         (CLKIN_50_BOT       ),
+    .sys_pll_reset                      (1'b0               ),
+    .pwrup_rst_n_out_export             (pwrup_rst_n        ),
+    .soc_reset_in_reset_n               (soc_rst_n          ),
+    .cpu_reset_in_reset_n               (ddr3_init_done     ),
+    .cpu_reset_out_reset_n              (cpu_rst_n          ),
+    .cpu_clk_clk                        (cpu_clk            ),
     //
-    .ddr3_mem_a                         (ddr3_a             ),
-    .ddr3_mem_ba                        (ddr3_ba            ),
-    .ddr3_mem_ck                        (ddr3_ck_p          ),
-    .ddr3_mem_ck_n                      (ddr3_ck_n          ),
-    .ddr3_mem_cke                       (ddr3_cke           ),
-    .ddr3_mem_cs_n                      (ddr3_csn           ),
-    .ddr3_mem_dm                        (ddr3_dm            ),
-    .ddr3_mem_ras_n                     (ddr3_rasn          ),
-    .ddr3_mem_cas_n                     (ddr3_casn          ),
-    .ddr3_mem_we_n                      (ddr3_wen           ),
-    .ddr3_mem_reset_n                   (ddr3_rstn          ),
-    .ddr3_mem_dq                        (ddr3_dq            ),
-    .ddr3_mem_dqs                       (ddr3_dqs_p         ),
-    .ddr3_mem_dqs_n                     (ddr3_dqs_n         ),
-    .ddr3_mem_odt                       (ddr3_odt           ),
-    .ddr3_oct_rzqin                     (ddr3_oct_rzq       ),
+    .ddr3_mem_a                         (DDR3_ADDR          ),
+    .ddr3_mem_ba                        (DDR3_BA            ),
+    .ddr3_mem_ck                        (DDR3_CK_P          ),
+    .ddr3_mem_ck_n                      (DDR3_CK_N          ),
+    .ddr3_mem_cke                       (DDR3_CKE           ),
+    .ddr3_mem_cs_n                      (DDR3_CS_N          ),
+    .ddr3_mem_dm                        (DDR3_DM            ),
+    .ddr3_mem_ras_n                     (DDR3_RAS_N         ),
+    .ddr3_mem_cas_n                     (DDR3_CAS_N         ),
+    .ddr3_mem_we_n                      (DDR3_WE_N          ),
+    .ddr3_mem_reset_n                   (DDR3_RESET_N       ),
+    .ddr3_mem_dq                        (DDR3_DQ            ),
+    .ddr3_mem_dqs                       (DDR3_DQS_P         ),
+    .ddr3_mem_dqs_n                     (DDR3_DQS_N         ),
+    .ddr3_mem_odt                       (DDR3_ODT           ),
+    .ddr3_oct_rzqin                     (DDR3_OCT_RZQ       ),
     .ddr3_status_local_init_done        (ddr3_init_done     ),
     .ddr3_status_local_cal_success      (ddr3_cal_success   ),
     .ddr3_status_local_cal_fail         (ddr3_cal_fail      ),
@@ -471,28 +554,32 @@ i_a5_sopc (
     .uart_debugaccess                   (                   ),
 
 
-    .bld_id_export                      (FPGA_A5_BUILD_ID   )
+    .soc_id_export                      (FPGA_A5_SOC_ID     ),
+    .bld_id_export                      (FPGA_A5_BLD_ID     ),
+    .core_clk_freq_export               (FPGA_A5_CORE_CLK_FREQ)
 );
 
+//==========================================================
+// JTAG
+//==========================================================
+`ifdef SCR1_DBG_EN
+assign scr1_jtag_trst_n     = JTAG_TRST_N;
+assign scr1_jtag_tck        = JTAG_TCK;
+assign scr1_jtag_tms        = JTAG_TMS;
+assign scr1_jtag_tdi        = JTAG_TDI;
+assign JTAG_TDO             = (scr1_jtag_tdo_en) ? scr1_jtag_tdo_int : 1'bZ;
+//
+assign JTAG_VCC             = '1;
+assign JTAG_GND             = '0;
+`endif // SCR1_DBG_EN
 
-assign riscv_jtag_trst_n    = jtag_trst_n;
-assign riscv_jtag_tck       = jtag_tck;
-assign riscv_jtag_tms       = jtag_tms;
-assign riscv_jtag_tdi       = jtag_tdi;
-assign jtag_tdo             = (riscv_jtag_tdo_en_cpu0) ? riscv_jtag_tdo_int_cpu0 : 1'bZ;
-
-
-
-
-
-
-
-assign user_led[3]   = ~ddr3_cal_success;
-assign user_led[2]   = ~ddr3_init_done;
-assign user_led[1]   = ~ddr3_cal_fail;
-assign user_led[0]   = '1;
-
-assign jtag_vcc      = '1;
-assign jtag_gnd      = '0;
+//==========================================================
+// LEDs
+//==========================================================
+assign USER_LED[3]   = ~ddr3_cal_fail;
+assign USER_LED[2]   = ~ddr3_cal_success;
+//assign USER_LED[1]   = ~ddr3_init_done;
+assign USER_LED[1]   =  hard_rst_n;
+assign USER_LED[0]   = ~heartbeat;
 
 endmodule

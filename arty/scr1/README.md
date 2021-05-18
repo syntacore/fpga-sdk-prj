@@ -7,11 +7,13 @@
 ## Folder contents
 Folder | Description
 ------ | -----------
-bd              | Block design files
-constrs         | Constraint files
-src             | Project's RTL source files
-arty_scr1.tcl   | TCL-file for project creation
-README.md       | This file
+constrs                | Constraint files
+src                    | Project's RTL source files
+arty_scr1.tcl          | TCL-file for project creation
+mem_update.tcl         | TCL-file for onchip SRAM memory initialization
+README.md              | This file
+scbl.mem               | The onchip SRAM memory content file with the SCR1 Bootloader
+write_mmi.tcl          | TCL-file with procedures for mem_update.tcl
 
 Hereinafter this folder is named <PROJECT_HOME_DIR> (the folder containing this README file).
 
@@ -53,22 +55,30 @@ After successful completion, the folder
 should contain updated bit-file arty_scr1_top_new.bit and MCS-file arty_scr1_top_new.mcs for configuration FLASH chip programming.
 
 ## SCR1 Memory Map
-Base Address | Length | Name | Description
------------- | ------ | ---- | -----------
-0x00000000   | 256 MB | Reserved | Reserved for onboard DDR3L SDRAM.
-0xF0000000   | 64  kB | TCM  | SCR1 Tightly-Coupled Memory (refer to SCR1 EAS).
-0xF0040000   | 32   B | Timer | SCR1 Timer registers (refer to SCR1 EAS).
-0xFF000000   |  | MMIO BASE  | Base address for Memory-Mapped Peripheral IO resources, resided externally to SCR1 core.
-0xFF000000   | 4   kB | SYS_ID | 32-bit System ID register.
-0xFF001000   | 4   kB | BLD_ID | 32-bit Build ID register.
-0xFF010000   | 4   kB | UART | 16550 UART registers (refer to Xilinx IP description for details). Interrupt line is assigned to IRQ[0].
-0xFF020000   | 4   kB | LED | LED PIO registers: PIO_LED_RGB and PIO_LED (offsets 0x0, 0x8).
-0xFF021000   | 4   kB | BTN | Push Button PIO register: PIO_PBUTTON. Has associated interrupt line assigned to IRQ[1].
-0xFFFF0000   | 64  kB | SRAM | Onchip SRAM containing pre-programmed SCR Loader firmware. SCR1_RST_VECTOR and SCR1_CSR_MTVEC_BASE are both mapped here.
+Base Address | Length | Name          | Description
+------------ | ------ | ------------- | -----------
+0x00000000   | 256 MB | SDRAM         | Onboard DDR3L SDRAM.
+0xF0000000   | 64  kB | TCM           | SCR1 Tightly-Coupled Memory (refer to SCR1 EAS).
+0xF0040000   | 32   B | Timer         | SCR1 Timer registers (refer to SCR1 EAS).
+0xFF000000   |        | MMIO BASE     | Base address for Memory-Mapped Peripheral IO resources, resided externally to SCR1 core.
+0xFF000000   | 4   kB | SOC_ID        | 32-bit SOC_ID register.
+0xFF001000   | 4   kB | BLD_ID        | 32-bit BLD_ID register.
+0xFF002000   | 4   kB | CORE_CLK_FREQ | 32-bit Core Clock Frequency register.
+0xFF010000   | 4   kB | UART          | 16550 UART registers (refer to Xilinx IP description for details). Interrupt line is assigned to IRQ[0].
+0xFF020000   | 4   kB | LED           | LED PIO registers: PIO_LED.
+0xFF021000   | 4   kB | LED_RGB       | RGB LED PIO registers: PIO_LED_RGB.
+0xFF028000   | 4   kB | BTN           | Push Button PIO register: PIO_PBUTTON. Has associated interrupt line assigned to IRQ[1].
+0xFFFF0000   | 64  kB | SRAM          | Onchip SRAM containing pre-programmed SCR Loader firmware. SCR1_RST_VECTOR and SCR1_CSR_MTVEC_BASE are both mapped here.
 
 ## MMIO Registers
 
-### PIO_LED_RGB, Programmable IO LED RGB Control Register (0xFF020000)
+### PIO_LED, Programmable IO LED Control Register (0xFF020000)
+Bit(s) | Name | Description
+-------| ---- | -----------
+0      | LED0 | LED[0] control: corresponds to the onboard LD4. If a bit is 1, LED is illuminated.
+1      | LED1 | LED[1] control (onboard LD5).
+
+### PIO_LED_RGB, Programmable IO LED RGB Control Register (0xFF021000)
 Bit(s) | Name | Description
 -------| ---- | -----------
 0..2   | LED0 | LED[0] control: bits [2:0] correspond to {red, green, blue} partial LEDs of the onboard LD0. If a bit is 1, appropriate internal LED is illuminated.
@@ -76,13 +86,7 @@ Bit(s) | Name | Description
 6..8   | LED2 | LED[2] control (onboard LD2).
 9..11  | LED3 | LED[3] control (onboard LD3).
 
-### PIO_LED, Programmable IO LED Control Register (0xFF020008)
-Bit(s) | Name | Description
--------| ---- | -----------
-0      | LED0 | LED[0] control: corresponds to the onboard LD4. If a bit is 1, LED is illuminated.
-1      | LED1 | LED[1] control (onboard LD5).
-
-### PIO_PBUTTON, Programmable IO Push Button Status Register (0xFF021000)
+### PIO_PBUTTON, Programmable IO Push Button Status Register (0xFF028000)
 Bit(s) | Name | Description
 -------| ---- | -----------
 0..3   | BTN  | BTN status: bits [3:0] correspond to {BTN3, BTN2, BTN1, BTN0} onboard push buttons. For details refer to the Xilinx AXI GPIO IP documentation.

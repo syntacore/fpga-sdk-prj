@@ -5,6 +5,7 @@ set proj            [current_project]
 set proj_dir        [get_property directory [current_project]]
 set top_entity      [get_property top [get_filesets sources_1]]
 set obj_dir         [get_property directory [get_runs impl_1]]
+#set mem_file        "../[glob -nocomplain *.mem]"
 set mem_file        "../scbl.mem"
 set bit_file        "${top_entity}.bit"
 set out_file        "${top_entity}_new.bit"

@@ -1,6 +1,6 @@
 set_global_assignment -name FAMILY "MAX 10"
 set_global_assignment -name DEVICE 10M50DAF484C7G
-set_global_assignment -name TOP_LEVEL_ENTITY "de10lite"
+set_global_assignment -name TOP_LEVEL_ENTITY "de10lite_scr1"
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 16.0.0
 set_global_assignment -name LAST_QUARTUS_VERSION "17.1.0 Standard Edition"
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "13:36:13 AUGUST 25,2017"
@@ -204,9 +204,9 @@ set_location_assignment PIN_L19 -to HEX5[7]
 # KEY
 #============================================================
 set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to KEY[0]
-#set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to KEY[1]
+set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to KEY[1]
 set_location_assignment PIN_B8 -to KEY[0]
-#set_location_assignment PIN_A7 -to KEY[1]
+set_location_assignment PIN_A7 -to KEY[1]
 
 #============================================================
 # LED
@@ -260,8 +260,9 @@ set_location_assignment PIN_F15 -to SW[9]
 # GPIO, GPIO connect to GPIO Default
 #============================================================
 
-set_location_assignment PIN_W8 -to UART_TXD
-set_location_assignment PIN_W9 -to UART_RXD
+set_location_assignment PIN_W8 -to UART_RXD
+set_location_assignment PIN_W9 -to UART_TXD
+set_location_assignment PIN_AA7 -to JTAG_SRST_N
 set_location_assignment PIN_Y5 -to JTAG_TRST_N
 set_location_assignment PIN_Y6 -to JTAG_TCK
 set_location_assignment PIN_AA2 -to JTAG_TMS
@@ -270,6 +271,7 @@ set_location_assignment PIN_Y3 -to JTAG_TDO
 
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to UART_TXD
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to UART_RXD
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to JTAG_SRST_N
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to JTAG_TRST_N
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to JTAG_TCK
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to JTAG_TMS
@@ -279,11 +281,12 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to JTAG_TDO
 
 #set_instance_assignment -name GLOBAL_SIGNAL "GLOBAL CLOCK" -to JTAG_TCK
 #set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to JTAG_TDO
-#set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to JTAG_TCK
-#set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to JTAG_TRST_N
-#set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to JTAG_TDI
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to JTAG_TCK
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to JTAG_SRST_N
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to JTAG_TRST_N
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to JTAG_TDI
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to JTAG_TDO
-#set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to JTAG_TMS
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to JTAG_TMS
 #set_instance_assignment -name FAST_INPUT_REGISTER ON -to JTAG_TDI
 
 
@@ -372,20 +375,19 @@ set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_global_assignment -name NUM_PARALLEL_PROCESSORS ALL
-set_global_assignment -name VERILOG_FILE ip/pll.v
-set_global_assignment -name SYSTEMVERILOG_FILE de10lite.sv
-set_global_assignment -name SDC_FILE de10lite.sdc
-set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/pipeline/scr1_pipe_ifu.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/pipeline/scr1_pipe_idu.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/pipeline/scr1_pipe_exu.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/pipeline/scr1_pipe_csr.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/pipeline/scr1_pipe_hdu.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/pipeline/scr1_pipe_ialu.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/pipeline/scr1_pipe_lsu.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/pipeline/scr1_pipe_mprf.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/pipeline/scr1_pipe_tdu.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/pipeline/scr1_ipic.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/pipeline/scr1_pipe_top.sv
+set_global_assignment -name SYSTEMVERILOG_FILE de10lite_scr1.sv
+set_global_assignment -name SDC_FILE de10lite_scr1.sdc
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/core/pipeline/scr1_pipe_ifu.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/core/pipeline/scr1_pipe_idu.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/core/pipeline/scr1_pipe_exu.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/core/pipeline/scr1_pipe_csr.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/core/pipeline/scr1_pipe_hdu.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/core/pipeline/scr1_pipe_ialu.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/core/pipeline/scr1_pipe_lsu.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/core/pipeline/scr1_pipe_mprf.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/core/pipeline/scr1_pipe_tdu.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/core/pipeline/scr1_ipic.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/core/pipeline/scr1_pipe_top.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/core/scr1_dm.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/core/scr1_dmi.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ../../../scr1/src/core/scr1_scu.sv
@@ -414,7 +416,7 @@ set_global_assignment -name VERILOG_FILE ip/uart/uart_rfifo.v
 set_global_assignment -name VERILOG_FILE ip/uart/uart_regs.v
 set_global_assignment -name VERILOG_FILE ip/uart/uart_receiver.v
 
-set_global_assignment -name QSYS_FILE qsys/de10lite_qsys.qsys
+set_global_assignment -name QSYS_FILE qsys/de10lite_sopc.qsys
 set_global_assignment -name ENABLE_OCT_DONE OFF
 set_global_assignment -name EXTERNAL_FLASH_FALLBACK_ADDRESS 00000000
 set_global_assignment -name STRATIXV_CONFIGURATION_SCHEME "PASSIVE SERIAL"
